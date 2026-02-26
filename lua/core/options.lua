@@ -33,4 +33,4 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 -- Colorscheme
-vim.cmd([[ colorscheme onelight ]])
+vim.cmd([[ colorscheme onedark ]])

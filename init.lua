@@ -6,6 +6,7 @@ require("core.keymaps")
 require("plugins")
 
 -- Plugin configurations
+require("plugins.devicons")
 require("plugins.nvim-tree")
 require("plugins.lualine")
 require("plugins.telescope")

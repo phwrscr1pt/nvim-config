@@ -1,5 +1,9 @@
 # Installation Guide
 
+Step-by-step guide to install and configure this Neovim setup on your system.
+
+---
+
 ## Requirements
 
 - Neovim 0.10+
@@ -183,8 +187,26 @@ rm -rf ~/.cache/nvim
 
 ## Documentation
 
+### Suggested Learning Order
+
+Follow this path to learn effectively:
+
+| Step | File | What You'll Learn | Time |
+|------|------|-------------------|------|
+| 1 | **INSTALL.md** (this file) | Setup and configuration | 15 min |
+| 2 | [VIM_TUTORIAL.md](VIM_TUTORIAL.md) | Core Vim motions and commands | 1-2 hours |
+| 3 | [KEYBINDINGS.md](KEYBINDINGS.md) | This config's shortcuts (keep open while practicing) | Reference |
+| 4 | [PLUGINS.md](PLUGINS.md) | File navigation, LSP, Git integration | 30 min |
+| 5 | [TMUX_TUTORIAL.md](TMUX_TUTORIAL.md) | Terminal multiplexing | 30 min |
+| 6 | [VI_MODE_MANUAL.md](VI_MODE_MANUAL.md) | Vi mode in shell and other tools | 15 min |
+
+### Quick Links
+
 - [KEYBINDINGS.md](KEYBINDINGS.md) - All keyboard shortcuts
 - [VIM_TUTORIAL.md](VIM_TUTORIAL.md) - Learn Vim basics
+- [PLUGINS.md](PLUGINS.md) - Plugin guide and workflows
+- [TMUX_TUTORIAL.md](TMUX_TUTORIAL.md) - Terminal multiplexer
+- [VI_MODE_MANUAL.md](VI_MODE_MANUAL.md) - Vi mode everywhere
 
 ## One-Line Install (Advanced)
 

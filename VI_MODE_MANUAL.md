@@ -1,6 +1,6 @@
 # Vi Mode Manual for Terminal
 
-This guide covers enabling vi keybindings in your shell and readline-based programs.
+Enable vi keybindings in your shell, readline programs, and tmux for a consistent Vim-like experience everywhere.
 
 ---
 
@@ -315,3 +315,80 @@ tmux source-file ~/.tmux.conf
 ```
 
 Now copy mode uses vi keybindings.
+
+---
+
+## Practice Exercises
+
+### Exercise 1: Enable Vi Mode in Your Shell
+1. Check your shell: `echo $SHELL`
+2. For Zsh: `echo "bindkey -v" >> ~/.zshrc`
+3. For Bash: `echo "set -o vi" >> ~/.bashrc`
+4. Reload: `source ~/.zshrc` or `source ~/.bashrc`
+5. Test: Type a command, press `Esc`, then use `h` and `l` to move
+
+### Exercise 2: Practice Shell Vi Mode
+1. Type a long command (don't press Enter)
+2. Press `Esc` to enter normal mode
+3. Move to start of line: `0`
+4. Move to end of line: `$`
+5. Delete a word: `dw`
+6. Undo: `u`
+7. Press `i` to go back to insert mode
+
+### Exercise 3: Command History Navigation
+1. Press `Esc` to enter normal mode
+2. Press `k` to go to previous command
+3. Press `j` to go to next command
+4. Search history: `/` then type part of a command
+5. Press `n` for next match
+
+### Exercise 4: Enable Readline Vi Mode
+1. Add to inputrc: `echo "set editing-mode vi" >> ~/.inputrc`
+2. Open Python REPL: `python3`
+3. Type something, press `Esc`, navigate with `h` and `l`
+4. Exit Python: `exit()`
+
+### Exercise 5: Tmux Vi Mode
+1. Add vi mode: `echo "setw -g mode-keys vi" >> ~/.tmux.conf`
+2. Reload tmux: `tmux source-file ~/.tmux.conf`
+3. Enter copy mode: `Ctrl+b [`
+4. Navigate with `h`, `j`, `k`, `l`
+5. Search with `/`
+6. Exit with `q`
+
+---
+
+## Quick Reference Card
+
+```
+ENABLE VI MODE
+--------------
+Bash:      set -o vi        (~/.bashrc)
+Zsh:       bindkey -v       (~/.zshrc)
+Readline:  set editing-mode vi  (~/.inputrc)
+Tmux:      setw -g mode-keys vi (~/.tmux.conf)
+
+VI MODE BASICS
+--------------
+Esc        Normal mode
+i / a      Insert mode
+h l        Left / Right
+w / b      Word forward / back
+0 / $      Line start / end
+x / dd     Delete char / line
+cw / cc    Change word / line
+yy / p     Yank / Paste
+
+TMUX ESSENTIALS
+---------------
+Ctrl+b c   New window
+Ctrl+b %   Split vertical
+Ctrl+b "   Split horizontal
+Ctrl+b d   Detach session
+Ctrl+b [   Copy mode (scroll)
+```
+
+---
+
+Happy terminal hacking!

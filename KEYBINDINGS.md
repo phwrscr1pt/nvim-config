@@ -1,5 +1,9 @@
 # Neovim Keybindings Cheatsheet
 
+Quick reference for all keyboard shortcuts in this Neovim configuration.
+
+---
+
 > Leader key: `Space`
 
 ## General
@@ -98,6 +102,47 @@ Inside terminal:
 3. **Terminal workflow**: `<A-q>` for floating terminal to run scripts
 4. **Fast file switching**: Add frequently used files to Harpoon with `<Space>a`
 
+## Practice Exercises
+
+### Exercise 1: File Navigation
+1. Open Neovim in a project folder: `nvim .`
+2. Toggle file tree: `<Space>e`
+3. Navigate and open a file with `Enter`
+4. Close the tree: `<Space>e`
+5. Find another file: `<C-p>` and type part of filename
+6. Search for text in project: `<Space>ps` and type a keyword
+
+### Exercise 2: Harpoon Workflow
+1. Open 3-4 files you work with often
+2. Add each to harpoon: `<Space>a`
+3. Open harpoon menu: `<Space>h`
+4. Jump between files: `<A-1>`, `<A-2>`, `<A-3>`
+5. Cycle through them: `<Tab>` and `<S-Tab>`
+
+### Exercise 3: Terminal Integration
+1. Open floating terminal: `<A-q>`
+2. Run a command (e.g., `ls` or `python --version`)
+3. Hide terminal: `<A-q>`
+4. Open horizontal terminal: `<A-w>`
+5. Toggle it off: `<A-w>`
+
+### Exercise 4: LSP Features
+1. Open a Python or JavaScript file
+2. Hover over a function: press `K` to see docs
+3. Go to a function definition: `gd`
+4. Go back: `<C-o>`
+5. Find all references: `<Space>lr`
+6. Try renaming a variable: `<Space>r`
+
+### Exercise 5: Complete Workflow
+Combine everything:
+1. `<C-p>` to find and open a file
+2. `<Space>a` to add it to harpoon
+3. `gd` to jump to a definition
+4. `<Space>ps` to search for related code
+5. `<A-q>` to open terminal and run tests
+6. `<Space>gg` to commit your changes
+
 ## Legend
 
 | Symbol | Key |
@@ -109,3 +154,7 @@ Inside terminal:
 | `<CR>` | Enter |
 | `<Esc>` | Escape |
 | `<Tab>` | Tab |
+
+---
+
+Happy editing!

@@ -2,6 +2,8 @@
 
 Tmux (Terminal Multiplexer) - Run multiple terminals in one window, keep sessions alive.
 
+---
+
 ## Why Use Tmux?
 
 - **Split terminal** into multiple panes
@@ -342,6 +344,89 @@ tmux a -t hack
 
 ---
 
+## Tmux + Neovim Workflow
+
+```bash
+# Start tmux
+tmux new -s project
+
+# Split for code and terminal
+<prefix> %
+
+# Left pane: Neovim
+nvim .
+
+# Right pane: Run commands, tests, etc.
+<prefix> →
+python script.py
+
+# Switch between with <prefix> ← and <prefix> →
+```
+
+---
+
+## Tips
+
+1. **Always name sessions** - `tmux new -s name` instead of just `tmux`
+2. **Use mouse mode** - Add `set -g mouse on` to config
+3. **Change prefix** - `Ctrl+a` is easier than `Ctrl+b`
+4. **Zoom for focus** - `<prefix> z` to fullscreen a pane
+5. **Sync panes** - Great for multi-server commands
+
+---
+
+## Practice Exercises
+
+### Exercise 1: Basic Session Management
+1. Create a new session named "practice": `tmux new -s practice`
+2. Detach from the session: `<prefix> d`
+3. List all sessions: `tmux ls`
+4. Reattach to your session: `tmux a -t practice`
+5. Kill the session: `tmux kill-session -t practice`
+
+### Exercise 2: Windows (Tabs)
+1. Start tmux: `tmux new -s windows`
+2. Create 3 new windows: `<prefix> c` (3 times)
+3. Rename each window: `<prefix> ,` then type "code", "terminal", "logs"
+4. Navigate between them: `<prefix> n` and `<prefix> p`
+5. Jump directly to window 2: `<prefix> 2`
+6. List all windows: `<prefix> w`
+
+### Exercise 3: Panes (Splits)
+1. Start fresh: `tmux new -s panes`
+2. Split vertically: `<prefix> %`
+3. Split the right pane horizontally: `<prefix> "`
+4. Navigate between panes: `<prefix>` + arrow keys
+5. Zoom into one pane: `<prefix> z`
+6. Zoom out: `<prefix> z` again
+7. Close a pane: `<prefix> x`
+
+### Exercise 4: Copy Mode (Scrolling)
+1. Run a command with lots of output: `ls -la /etc`
+2. Enter copy mode: `<prefix> [`
+3. Scroll up with `k` or `Page Up`
+4. Search for a word: `/` then type search term
+5. Exit copy mode: `q`
+
+### Exercise 5: Build Your IDE Layout
+Create this layout:
+```
+┌────────────┬────────────┐
+│            │   term     │
+│   nvim     ├────────────┤
+│            │   logs     │
+└────────────┴────────────┘
+```
+Steps:
+1. `tmux new -s ide`
+2. `<prefix> %` (split vertical)
+3. `<prefix> →` (move to right pane)
+4. `<prefix> "` (split horizontal)
+5. `<prefix> ←` (back to left pane)
+6. Run `nvim .` in the left pane
+
+---
+
 ## Quick Reference Card
 
 ```
@@ -378,37 +463,6 @@ Space                Start selection
 Enter                Copy
 <prefix> ]           Paste
 ```
-
----
-
-## Tmux + Neovim Workflow
-
-```bash
-# Start tmux
-tmux new -s project
-
-# Split for code and terminal
-<prefix> %
-
-# Left pane: Neovim
-nvim .
-
-# Right pane: Run commands, tests, etc.
-<prefix> →
-python script.py
-
-# Switch between with <prefix> ← and <prefix> →
-```
-
----
-
-## Tips
-
-1. **Always name sessions** - `tmux new -s name` instead of just `tmux`
-2. **Use mouse mode** - Add `set -g mouse on` to config
-3. **Change prefix** - `Ctrl+a` is easier than `Ctrl+b`
-4. **Zoom for focus** - `<prefix> z` to fullscreen a pane
-5. **Sync panes** - Great for multi-server commands
 
 ---
 

@@ -2,6 +2,8 @@
 
 Complete guide to all plugins in this Neovim configuration.
 
+---
+
 ## Plugin Overview
 
 | Plugin | Purpose | Category |

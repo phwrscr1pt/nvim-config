@@ -1,5 +1,9 @@
 # Vim Tutorial - From Zero to Hero
 
+Complete guide to mastering Vim motions, commands, and workflows.
+
+---
+
 ## Understanding Vim Modes
 
 Vim has different modes for different tasks:

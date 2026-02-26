@@ -7,19 +7,25 @@ lsp_zero.on_attach(function(client, bufnr)
   vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
   vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
   vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-  vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-  vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+  vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
+  vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
   vim.keymap.set("n", "<leader>la", function() vim.lsp.buf.code_action() end, opts)
   vim.keymap.set("n", "<leader>lr", function() vim.lsp.buf.references() end, opts)
   vim.keymap.set("n", "<leader>r", function() vim.lsp.buf.rename() end, opts)
   vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-  
+
   lsp_zero.buffer_autoformat()
 end)
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = { 'rust_analyzer' },
+  ensure_installed = {
+    'pyright',           -- Python (scripting, exploits)
+    'bashls',            -- Bash scripting
+    'gopls',             -- Go (many security tools)
+    'clangd',            -- C/C++ (binary analysis, exploits)
+    'lua_ls',            -- Lua (Neovim config)
+  },
   handlers = {
     lsp_zero.default_setup,
     lua_ls = function()
@@ -40,7 +46,6 @@ cmp.setup({
   },
   snippet = {
     expand = function(args)
-      -- You need Neovim v0.10 to use vim.snippet
       vim.snippet.expand(args.body)
     end,
   },
@@ -51,6 +56,3 @@ cmp.setup({
     ['<C-Space>'] = cmp.mapping.complete(),
   }),
 })
-
-
-

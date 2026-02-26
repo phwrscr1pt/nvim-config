@@ -256,10 +256,47 @@ Enter copy mode first: `Ctrl+b [`
 
 ### Resize Panes
 
+#### Method 1: Keyboard Shortcuts
+
 | Key | Action |
 |-----|--------|
-| `Ctrl+b Ctrl+arrow` | Resize pane |
-| `Ctrl+b Alt+arrow` | Resize pane (larger steps) |
+| `Ctrl+b Ctrl+Up` | Resize up |
+| `Ctrl+b Ctrl+Down` | Resize down |
+| `Ctrl+b Ctrl+Left` | Resize left |
+| `Ctrl+b Ctrl+Right` | Resize right |
+
+Hold `Ctrl+b` and press arrow repeatedly to keep resizing.
+
+#### Method 2: Alt + Arrow (Larger Steps)
+
+| Key | Action |
+|-----|--------|
+| `Ctrl+b Alt+Up` | Resize up (5 cells) |
+| `Ctrl+b Alt+Down` | Resize down (5 cells) |
+| `Ctrl+b Alt+Left` | Resize left (5 cells) |
+| `Ctrl+b Alt+Right` | Resize right (5 cells) |
+
+#### Method 3: Command Mode
+
+Press `Ctrl+b :` then type:
+
+```bash
+resize-pane -D 10    # Down 10 cells
+resize-pane -U 10    # Up 10 cells
+resize-pane -L 10    # Left 10 cells
+resize-pane -R 10    # Right 10 cells
+```
+
+#### Method 4: Mouse Resize
+
+Add to `~/.tmux.conf`:
+
+```bash
+echo "set -g mouse on" >> ~/.tmux.conf
+tmux source-file ~/.tmux.conf
+```
+
+Then drag pane borders with mouse.
 
 ---
 

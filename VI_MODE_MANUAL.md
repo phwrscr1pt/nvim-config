@@ -183,3 +183,98 @@ echo "bindkey -v" >> ~/.zshrc && echo "set editing-mode vi" >> ~/.inputrc && sou
 ```bash
 echo "set -o vi" >> ~/.bashrc && echo "set editing-mode vi" >> ~/.inputrc && source ~/.bashrc
 ```
+
+---
+
+## 6. Terminal Scrolling
+
+### Default Terminal (No tmux)
+
+| Key | Action |
+|-----|--------|
+| `Shift+PgUp` | Scroll up |
+| `Shift+PgDn` | Scroll down |
+| `Shift+Home` | Scroll to top |
+| `Shift+End` | Scroll to bottom |
+| Mouse scroll | If enabled |
+
+### Tmux Scrolling (Copy Mode)
+
+Enter copy mode first: `Ctrl+b [`
+
+| Key | Action |
+|-----|--------|
+| `j` / `k` | Scroll line by line |
+| `Ctrl+d` / `Ctrl+u` | Half page down/up |
+| `Ctrl+f` / `Ctrl+b` | Full page down/up |
+| `g` | Go to top |
+| `G` | Go to bottom |
+| `/` | Search forward |
+| `?` | Search backward |
+| `q` | Exit copy mode |
+
+---
+
+## 7. Tmux Essential Commands
+
+### Session Management
+
+| Command | Action |
+|---------|--------|
+| `tmux` | Start new session |
+| `tmux new -s name` | New session with name |
+| `tmux ls` | List sessions |
+| `tmux a` | Attach to last session |
+| `tmux a -t name` | Attach to named session |
+| `Ctrl+b d` | Detach from session |
+| `Ctrl+b $` | Rename session |
+
+### Window Management
+
+| Key | Action |
+|-----|--------|
+| `Ctrl+b c` | Create new window |
+| `Ctrl+b n` | Next window |
+| `Ctrl+b p` | Previous window |
+| `Ctrl+b 0-9` | Go to window number |
+| `Ctrl+b ,` | Rename window |
+| `Ctrl+b &` | Close window |
+| `Ctrl+b w` | List windows |
+
+### Pane Management (Split Screen)
+
+| Key | Action |
+|-----|--------|
+| `Ctrl+b %` | Split vertical |
+| `Ctrl+b "` | Split horizontal |
+| `Ctrl+b arrow` | Move between panes |
+| `Ctrl+b x` | Close pane |
+| `Ctrl+b z` | Zoom pane (fullscreen toggle) |
+| `Ctrl+b {` | Swap pane left |
+| `Ctrl+b }` | Swap pane right |
+| `Ctrl+b space` | Toggle pane layouts |
+
+### Resize Panes
+
+| Key | Action |
+|-----|--------|
+| `Ctrl+b Ctrl+arrow` | Resize pane |
+| `Ctrl+b Alt+arrow` | Resize pane (larger steps) |
+
+---
+
+## 8. Enable Vi Mode in Tmux
+
+Add to `~/.tmux.conf`:
+
+```bash
+echo "setw -g mode-keys vi" >> ~/.tmux.conf
+```
+
+Reload tmux config:
+
+```bash
+tmux source-file ~/.tmux.conf
+```
+
+Now copy mode uses vi keybindings.

@@ -4,6 +4,43 @@ Step-by-step guide to install and configure this Neovim setup on your system.
 
 ---
 
+## TL;DR - Copy-Paste for Fresh Kali
+
+If you just want to copy-paste everything and get it working:
+
+```bash
+# 1. Install all dependencies
+sudo apt update && sudo apt install -y neovim git ripgrep fd-find nodejs npm curl unzip build-essential
+
+# 2. Install lazygit
+LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+tar xf lazygit.tar.gz lazygit
+sudo install lazygit /usr/local/bin
+rm lazygit lazygit.tar.gz
+
+# 3. Install Nerd Font
+mkdir -p ~/.local/share/fonts && cd ~/.local/share/fonts
+curl -fLo "JetBrainsMono.zip" https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
+unzip JetBrainsMono.zip && rm JetBrainsMono.zip && fc-cache -fv && cd ~
+
+# 4. Clean old configs (if any)
+rm -rf ~/.config/nvim ~/.local/share/nvim ~/.cache/nvim
+
+# 5. Clone this repo
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git ~/.config/nvim
+
+# 6. Install plugins (ignore first-run errors, they are normal!)
+nvim -c "autocmd User PackerComplete quitall" -c "PackerSync"
+
+# 7. Run again to finish setup
+nvim -c "autocmd User PackerComplete quitall" -c "PackerSync"
+```
+
+**After running above:** Set your terminal font to "JetBrainsMono Nerd Font Mono", restart terminal, then run `nvim`.
+
+---
+
 ## Requirements
 
 - Neovim 0.10+
@@ -11,47 +48,43 @@ Step-by-step guide to install and configure this Neovim setup on your system.
 - Node.js (for some LSP servers)
 - ripgrep (for Telescope live grep)
 - fd (for Telescope file finder)
+- lazygit (for Git integration)
 - Nerd Font (for icons)
 
-## Quick Install (Kali Linux / Debian / Ubuntu)
+---
 
-### Step 1: Install Dependencies
+## Fresh Kali Linux Installation (Complete Guide)
 
-```bash
-sudo apt update
-sudo apt install neovim git ripgrep fd-find nodejs npm curl unzip
-```
+If you have a fresh Kali with nothing installed, follow these steps carefully.
 
-### Step 2: Backup Existing Config (if any)
+### Step 1: Update System
 
 ```bash
-mv ~/.config/nvim ~/.config/nvim.backup
+sudo apt update && sudo apt upgrade -y
 ```
 
-### Step 3: Clone This Repository
+### Step 2: Install ALL Dependencies
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git ~/.config/nvim
+sudo apt install -y neovim git ripgrep fd-find nodejs npm curl unzip build-essential
 ```
 
-### Step 4: Install Plugins
+### Step 3: Install lazygit (for Git integration)
 
-Open Neovim:
 ```bash
-nvim
+LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+tar xf lazygit.tar.gz lazygit
+sudo install lazygit /usr/local/bin
+rm lazygit lazygit.tar.gz
 ```
 
-Wait for Packer to auto-install, then run:
-```vim
-:PackerSync
-```
-
-Close and reopen Neovim:
+Verify:
 ```bash
-nvim
+lazygit --version
 ```
 
-### Step 5: Install Nerd Font (for icons)
+### Step 4: Install Nerd Font (IMPORTANT - do this BEFORE opening Neovim)
 
 ```bash
 mkdir -p ~/.local/share/fonts
@@ -60,9 +93,85 @@ curl -fLo "JetBrainsMono.zip" https://github.com/ryanoasis/nerd-fonts/releases/d
 unzip JetBrainsMono.zip
 rm JetBrainsMono.zip
 fc-cache -fv
+cd ~
 ```
 
-Then set your terminal font to **"JetBrainsMono Nerd Font"**.
+Then set your terminal font to **"JetBrainsMono Nerd Font"**:
+- **Kali Terminal**: Right-click → Preferences → Custom font → "JetBrainsMono Nerd Font Mono"
+- **Qterminal**: Edit → Preferences → Appearance → Font
+
+### Step 5: Backup Existing Config (if any)
+
+```bash
+mv ~/.config/nvim ~/.config/nvim.backup 2>/dev/null
+mv ~/.local/share/nvim ~/.local/share/nvim.backup 2>/dev/null
+mv ~/.cache/nvim ~/.cache/nvim.backup 2>/dev/null
+```
+
+### Step 6: Clone This Repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git ~/.config/nvim
+```
+
+### Step 7: First Run - Install Plugins (IMPORTANT!)
+
+**This step has multiple parts. Read carefully.**
+
+**7a.** Open Neovim:
+```bash
+nvim
+```
+
+**7b.** You will see errors like this - **THIS IS NORMAL ON FIRST RUN**:
+```
+Error running config for toggleterm.nvim: module 'toggleterm' not found
+```
+
+These errors happen because plugins haven't been downloaded yet. **Ignore them.**
+
+**7c.** Wait 5-10 seconds for Packer to auto-bootstrap, then run:
+```vim
+:PackerSync
+```
+
+**7d.** Wait for all plugins to download (you'll see progress in a split window).
+
+**7e.** When done, **QUIT Neovim completely**:
+```vim
+:qa
+```
+
+**7f.** Open Neovim again:
+```bash
+nvim
+```
+
+**7g.** Run PackerSync ONE MORE TIME to compile everything:
+```vim
+:PackerSync
+```
+
+**7h.** Quit and reopen Neovim:
+```bash
+nvim
+```
+
+Now everything should work without errors!
+
+### Step 8: Verify Installation
+
+Run these commands in Neovim to verify everything works:
+
+| Check | Command | Expected |
+|-------|---------|----------|
+| Plugins | `:PackerStatus` | All plugins listed |
+| LSP | `:LspInfo` | Shows attached servers |
+| Mason | `:Mason` | Opens Mason UI |
+| File finder | `Ctrl+p` | Opens Telescope |
+| File tree | `Space e` | Opens file explorer |
+| Terminal | `Alt+q` | Opens floating terminal |
+| Git | `Space g g` | Opens lazygit |
 
 ## LSP Servers
 
@@ -96,9 +205,49 @@ Run this checklist in Neovim:
 
 ## Troubleshooting
 
+### "module 'toggleterm' not found" or similar errors on first run
+
+**This is NORMAL on first run!** The error happens because:
+1. Neovim tries to load plugin configs
+2. But plugins haven't been downloaded yet
+
+**Solution:**
+```bash
+# 1. Ignore the errors and run:
+:PackerSync
+
+# 2. QUIT Neovim completely:
+:qa
+
+# 3. Open again and run PackerSync again:
+nvim
+:PackerSync
+
+# 4. Quit and reopen:
+:qa
+nvim
+```
+
+If errors persist after this, delete everything and start fresh:
+```bash
+rm -rf ~/.local/share/nvim
+rm -rf ~/.cache/nvim
+nvim
+:PackerSync
+:qa
+nvim
+```
+
 ### Plugins not installing
 ```vim
 :PackerSync
+```
+
+If that doesn't work, check your internet connection and try:
+```vim
+:PackerClean
+:PackerInstall
+:PackerCompile
 ```
 
 ### LSP not working
@@ -106,12 +255,43 @@ Run this checklist in Neovim:
 :LspInfo
 :Mason
 ```
-Install missing servers from Mason UI.
+Install missing servers from Mason UI. Press `i` to install.
 
-### Icons not showing
-- Make sure you installed a Nerd Font
-- Set your terminal font to the Nerd Font
-- Restart terminal
+### Mason servers fail to install
+
+Some servers need additional tools:
+```bash
+# For most servers
+sudo apt install -y build-essential
+
+# For Python (pyright)
+sudo apt install -y python3 python3-pip
+
+# For C/C++ (clangd)
+sudo apt install -y clang
+
+# For Go (gopls)
+sudo apt install -y golang
+```
+
+### lazygit not working (`<Space>gg` does nothing)
+
+Make sure lazygit is installed:
+```bash
+lazygit --version
+
+# If not found, install it:
+LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+tar xf lazygit.tar.gz lazygit
+sudo install lazygit /usr/local/bin
+rm lazygit lazygit.tar.gz
+```
+
+### Icons not showing (boxes or question marks)
+- Make sure you installed a Nerd Font (Step 4)
+- Set your terminal font to "JetBrainsMono Nerd Font Mono"
+- **Restart your terminal completely** (not just open new tab)
 
 ### Telescope grep not working
 ```bash
@@ -120,6 +300,12 @@ rg --version
 
 # If not, install it
 sudo apt install ripgrep
+```
+
+### Telescope file finder slow
+```bash
+# Install fd for faster file finding
+sudo apt install fd-find
 ```
 
 ### Colors look wrong
@@ -132,6 +318,11 @@ echo $TERM
 Add to your `~/.bashrc` or `~/.zshrc`:
 ```bash
 export TERM=xterm-256color
+```
+
+Then restart terminal or run:
+```bash
+source ~/.bashrc
 ```
 
 ## Updating

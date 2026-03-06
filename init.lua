@@ -1,3 +1,5 @@
+vim.tbl_islist = vim.islist
+
 -- Core settings (load first)
 require("core.options")
 require("core.keymaps")

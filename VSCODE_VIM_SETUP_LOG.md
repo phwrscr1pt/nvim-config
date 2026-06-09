@@ -185,4 +185,80 @@ A comprehensive Vim cheatsheet for VS Code including:
 
 ---
 
+## Fix: Alt Keybindings Not Working (2026-06-09)
+
+### Problem
+
+Some keybindings were not working on Windows:
+- `Alt+Q`, `Alt+W`, `Alt+S` - Did not trigger
+- `Space k` - Error: "The editor could not be opened"
+
+### Root Cause
+
+1. **Alt keybindings** - VSCodeVim on Windows doesn't handle Alt key combinations reliably
+2. **Space k** - The `vscode.open` command requires URI format (`file:///C:/...`), not Windows path format
+
+### Solution
+
+Moved problematic keybindings from `settings.json` (Vim) to `keybindings.json` (VS Code native).
+
+**Updated settings.json** - Removed broken Alt keybindings:
+```json
+"vim.normalModeKeyBindingsNonRecursive": [
+    { "before": ["<leader>", "?"], "commands": ["workbench.action.openGlobalKeybindings"] },
+    { "before": ["<C-s>"], "commands": [":w"] },
+    { "before": ["<leader>", "e"], "commands": ["workbench.view.explorer"] },
+    { "before": ["<C-p>"], "commands": ["workbench.action.quickOpen"] },
+    { "before": ["<leader>", "f"], "commands": ["workbench.action.quickOpen"] },
+    { "before": ["<leader>", "p", "s"], "commands": ["workbench.action.findInFiles"] },
+    { "before": ["<leader>", "g", "g"], "commands": ["workbench.view.scm"] },
+    { "before": ["<leader>", "h"], "commands": ["workbench.action.showAllEditors"] },
+    { "before": ["<leader>", "a"], "commands": ["workbench.action.pinEditor"] },
+    { "before": ["<A-1>"], "commands": ["workbench.action.openEditorAtIndex1"] },
+    { "before": ["<A-2>"], "commands": ["workbench.action.openEditorAtIndex2"] },
+    { "before": ["<A-3>"], "commands": ["workbench.action.openEditorAtIndex3"] },
+    { "before": ["<A-4>"], "commands": ["workbench.action.openEditorAtIndex4"] },
+    { "before": ["<tab>"], "commands": [":tabnext"] },
+    { "before": ["<S-tab>"], "commands": [":tabprev"] }
+]
+```
+
+**Updated keybindings.json** - Added working keybindings:
+```json
+[
+    {
+        "key": "ctrl+shift+k",
+        "command": "vscode.open",
+        "args": "file:///C:/Users/pkhyo/nvim-config-class-bkk-2026/VSCODE_VIM_CHEATSHEET.md"
+    },
+    {
+        "key": "alt+s",
+        "command": "workbench.action.files.save",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+q",
+        "command": "workbench.action.terminal.toggleTerminal"
+    },
+    {
+        "key": "alt+w",
+        "command": "workbench.action.terminal.toggleTerminal"
+    },
+    {
+        "key": "space k",
+        "command": "vscode.open",
+        "args": "file:///C:/Users/pkhyo/nvim-config-class-bkk-2026/VSCODE_VIM_CHEATSHEET.md",
+        "when": "editorTextFocus && vim.mode == 'Normal'"
+    }
+]
+```
+
+### Lesson Learned
+
+> **On Windows, Alt keybindings work better in VS Code's `keybindings.json` than in VSCodeVim's settings.**
+
+For file paths with `vscode.open`, always use URI format: `file:///C:/path/to/file`
+
+---
+
 **Setup completed successfully!**

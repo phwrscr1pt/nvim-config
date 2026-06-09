@@ -66,6 +66,27 @@ Quick reference for Vim keybindings in VS Code (VSCodeVim extension).
 | `F4` | Next search result (from editor) |
 | `Shift+F4` | Previous search result |
 
+### Split Editors
+
+| Keybinding | Action |
+|------------|--------|
+| `Ctrl+\` | Split editor right |
+| `:vs` or `:vsp` | Vertical split |
+| `:sp` | Horizontal split |
+| `:vs filename` | Split and open file |
+
+### Navigate Splits
+
+| Keybinding | Action |
+|------------|--------|
+| `Ctrl+1` | Focus first editor group |
+| `Ctrl+2` | Focus second editor group |
+| `Ctrl+W h` | Move to left split |
+| `Ctrl+W l` | Move to right split |
+| `Ctrl+W j` | Move to bottom split |
+| `Ctrl+W k` | Move to top split |
+| `Ctrl+W q` | Close current split |
+
 ---
 
 ## Essential Vim Motions

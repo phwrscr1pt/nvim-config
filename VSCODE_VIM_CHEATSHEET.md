@@ -32,6 +32,9 @@ Quick reference for Vim keybindings in VS Code (VSCodeVim extension).
 |------------|--------|
 | `Space h` | Show all open editors |
 | `Space a` | Pin current editor |
+| `Space q` | Close current tab |
+| `Space x` | Close buffer/tab |
+| `Space 1` | Focus editor |
 | `Tab` | Next tab |
 | `Shift+Tab` | Previous tab |
 | `Alt+1` | Go to tab 1 |
@@ -52,6 +55,16 @@ Quick reference for Vim keybindings in VS Code (VSCodeVim extension).
 |------------|--------|
 | `J` | Move selected lines down |
 | `K` | Move selected lines up |
+
+### Search Results Navigation
+
+| Keybinding | Action |
+|------------|--------|
+| `↓` / `↑` | Navigate results in search panel |
+| `Enter` | Open selected result |
+| `Escape` | Return to editor |
+| `F4` | Next search result (from editor) |
+| `Shift+F4` | Previous search result |
 
 ---
 
@@ -229,8 +242,10 @@ gg G              u Ctrl+R          iw aw
 SEARCH            CUSTOM (Space+)   TERMINAL
 / ? n N           e = explorer      Alt+Q toggle
 * #               f = find files    Alt+W toggle
-                  ps = search
-                  gg = git
+F4 = next result  ps = search
+Shift+F4 = prev   gg = git
+                  q = close tab
+                  1 = focus editor
                   ? = help
 ```
 

@@ -261,4 +261,142 @@ For file paths with `vscode.open`, always use URI format: `file:///C:/path/to/fi
 
 ---
 
+## Fix: Space Keybindings Broken (2026-06-09)
+
+### Problem
+
+After adding `space k` to `keybindings.json`, ALL Space leader keybindings stopped working (`Space e`, `Space f`, etc.)
+
+### Root Cause
+
+VS Code's `keybindings.json` was intercepting the Space key before VSCodeVim could use it as the leader key.
+
+### Solution
+
+1. **Removed** `space k` from `keybindings.json`
+2. **Added** `Space k` back to vim settings using `:e` command:
+```json
+{ "before": ["<leader>", "k"], "commands": [":e C:\\Users\\pkhyo\\nvim-config-class-bkk-2026\\VSCODE_VIM_CHEATSHEET.md"] }
+```
+
+### Lesson Learned
+
+> **Never use `space` as a key in VS Code's `keybindings.json` when using VSCodeVim - it will intercept the leader key.**
+
+---
+
+## Enhancement: Navigation Keybindings (2026-06-09)
+
+### Problem
+
+- No easy way to close tabs without typing `:q`
+- Difficult to return from search panel to editor
+- Need to use mouse to navigate search results
+
+### Solution
+
+**Added to settings.json (vim keybindings):**
+```json
+{ "before": ["<leader>", "q"], "commands": [":q"] },
+{ "before": ["<leader>", "x"], "commands": [":bd"] },
+{ "before": ["<leader>", "1"], "commands": ["workbench.action.focusFirstEditorGroup"] }
+```
+
+**Added to keybindings.json (Escape handling):**
+```json
+{
+    "key": "escape",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "searchViewletFocus"
+},
+{
+    "key": "escape",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "sideBarFocus"
+}
+```
+
+### New Keybindings Added
+
+| Keybinding | Action |
+|------------|--------|
+| `Space q` | Close current tab |
+| `Space x` | Close buffer/tab |
+| `Space 1` | Focus editor |
+| `Escape` (in search/sidebar) | Return to editor |
+
+### Search Results Navigation
+
+| Keybinding | Action |
+|------------|--------|
+| `↓` / `↑` | Navigate results in search panel |
+| `Enter` | Open selected result |
+| `F4` | Next search result |
+| `Shift+F4` | Previous search result |
+
+---
+
+## Current Configuration (2026-06-09)
+
+### settings.json (Vim Keybindings)
+```json
+"vim.normalModeKeyBindingsNonRecursive": [
+    { "before": ["<leader>", "?"], "commands": ["workbench.action.openGlobalKeybindings"] },
+    { "before": ["<leader>", "k"], "commands": [":e C:\\Users\\pkhyo\\nvim-config-class-bkk-2026\\VSCODE_VIM_CHEATSHEET.md"] },
+    { "before": ["<C-s>"], "commands": [":w"] },
+    { "before": ["<leader>", "e"], "commands": ["workbench.view.explorer"] },
+    { "before": ["<C-p>"], "commands": ["workbench.action.quickOpen"] },
+    { "before": ["<leader>", "f"], "commands": ["workbench.action.quickOpen"] },
+    { "before": ["<leader>", "p", "s"], "commands": ["workbench.action.findInFiles"] },
+    { "before": ["<leader>", "g", "g"], "commands": ["workbench.view.scm"] },
+    { "before": ["<leader>", "h"], "commands": ["workbench.action.showAllEditors"] },
+    { "before": ["<leader>", "a"], "commands": ["workbench.action.pinEditor"] },
+    { "before": ["<leader>", "q"], "commands": [":q"] },
+    { "before": ["<leader>", "x"], "commands": [":bd"] },
+    { "before": ["<leader>", "1"], "commands": ["workbench.action.focusFirstEditorGroup"] },
+    { "before": ["<A-1>"], "commands": ["workbench.action.openEditorAtIndex1"] },
+    { "before": ["<A-2>"], "commands": ["workbench.action.openEditorAtIndex2"] },
+    { "before": ["<A-3>"], "commands": ["workbench.action.openEditorAtIndex3"] },
+    { "before": ["<A-4>"], "commands": ["workbench.action.openEditorAtIndex4"] },
+    { "before": ["<tab>"], "commands": [":tabnext"] },
+    { "before": ["<S-tab>"], "commands": [":tabprev"] }
+]
+```
+
+### keybindings.json
+```json
+[
+    {
+        "key": "ctrl+shift+k",
+        "command": "vscode.open",
+        "args": "file:///C:/Users/pkhyo/nvim-config-class-bkk-2026/VSCODE_VIM_CHEATSHEET.md"
+    },
+    {
+        "key": "alt+s",
+        "command": "workbench.action.files.save",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+q",
+        "command": "workbench.action.terminal.toggleTerminal"
+    },
+    {
+        "key": "alt+w",
+        "command": "workbench.action.terminal.toggleTerminal"
+    },
+    {
+        "key": "escape",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "searchViewletFocus"
+    },
+    {
+        "key": "escape",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "sideBarFocus"
+    }
+]
+```
+
+---
+
 **Setup completed successfully!**

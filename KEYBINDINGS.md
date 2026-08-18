@@ -5,54 +5,122 @@ Quick reference for all keyboard shortcuts in this Neovim configuration.
 ---
 
 > Leader key: `Space`
+>
+> Tip: press `Space` (or any prefix like `g`) and pause — **which-key** pops up a
+> menu of what can follow. The popup is set to appear after a ~1s pause so quick
+> sequences like `dd` don't flash it.
 
 ## General
 
 | Keybinding | Mode | Action |
 |------------|------|--------|
 | `<C-s>` | Normal/Insert | Save file |
-| `<A-s>` | Normal | Save file (no autocommand) |
+| `<A-s>` | Normal | Save file (no autocommand — `:noa w`) |
 | `J` | Visual | Move selected lines down |
 | `K` | Visual | Move selected lines up |
+| `<Esc>` | Normal | Clear search highlight + dismiss flash f/t highlight |
+
+## System Clipboard
+
+The `"+` register talks to your OS clipboard. On Linux this needs a provider
+installed — **xclip** or **xsel** (X11), or **wl-clipboard** (Wayland). Without
+one these do nothing; `:checkhealth provider` will tell you.
+
+| Keybinding | Mode | Action |
+|------------|------|--------|
+| `<Space>y` | Normal/Visual | Yank to system clipboard |
+| `<Space>Y` | Normal | Yank line to system clipboard |
+| `<Space>P` | Normal/Visual | Paste from system clipboard |
+
+## Copy File Path
+
+Copies the current buffer's path to the system clipboard (works in any buffer).
+
+| Keybinding | Mode | Action |
+|------------|------|--------|
+| `<Space>cp` | Normal | Copy relative path |
+| `<Space>cP` | Normal | Copy absolute path |
+| `<Space>cn` | Normal | Copy filename only |
+| `<Space>cd` | Normal | Copy directory (absolute) |
 
 ## File Explorer (nvim-tree)
 
 | Keybinding | Mode | Action |
 |------------|------|--------|
-| `<Space>e` | Normal | Toggle file tree |
+| `<Space>e` | Normal | Toggle file tree (find current file) |
 
 Inside nvim-tree:
 - `a` - Create new file/folder
 - `d` - Delete file
 - `r` - Rename file
-- `Enter` - Open file
+- `x` / `c` / `p` - Cut / copy / paste
+- `y` / `Y` / `gy` - Copy filename / relative path / absolute path
+- `Enter` / `o` - Open file
+- `<C-v>` / `<C-x>` / `<C-t>` - Open in vertical split / horizontal split / new tab
+- `H` - Toggle hidden files
+- `g?` - Show help (all mappings)
 - `q` - Close tree
 
 ## File Search (Telescope)
 
 | Keybinding | Mode | Action |
 |------------|------|--------|
-| `<C-p>` | Normal | Find files |
-| `<Space>f` | Normal | Find git files |
-| `<Space>ps` | Normal | Live grep (search text in files) |
+| `<Space>f` | Normal | Find files (git-aware: git files in a repo, else all files) |
+| `<C-p>` | Normal | Find files (always all files) |
+| `<Space>ps` | Normal | Live grep (search text across files — needs ripgrep) |
+| `<Space>pp` | Normal | Recent projects picker (project.nvim) |
 
 Inside Telescope:
 - `<C-n>` / `<C-p>` - Navigate results
 - `<CR>` - Open selected
-- `<Esc>` - Close
+- `<C-v>` / `<C-x>` / `<C-t>` - Open in vertical split / horizontal split / tab
+- `<C-c>` - Close (the picker opens in insert mode; `<Esc>` first drops to normal mode, then `<Esc>` again closes)
 
-## Quick File Navigation (Harpoon)
+## Quick File Marks (Grapple)
+
+Replaces the old Harpoon setup. Grapple tags are grouped per git repository.
 
 | Keybinding | Mode | Action |
 |------------|------|--------|
-| `<Space>a` | Normal | Add current file to harpoon |
-| `<Space>h` | Normal | Toggle harpoon menu |
-| `<Tab>` | Normal | Next harpoon file |
-| `<S-Tab>` | Normal | Previous harpoon file |
-| `<A-1>` | Normal | Jump to harpoon file 1 |
-| `<A-2>` | Normal | Jump to harpoon file 2 |
-| `<A-3>` | Normal | Jump to harpoon file 3 |
-| `<A-4>` | Normal | Jump to harpoon file 4 |
+| `<Space>m` | Normal | Toggle tag for the current file |
+| `<Space>M` | Normal | Open the tags menu |
+
+Inside the Grapple menu:
+- `<CR>` - Open selected file
+- `j` / `k` - Navigate
+- edit lines to reorder/remove, then `:w`
+
+## Jump Motion (flash.nvim)
+
+| Keybinding | Mode | Action |
+|------------|------|--------|
+| `s` | Normal/Visual/Op | Flash jump — type target chars, then a label to teleport |
+| `S` | Normal/Visual/Op | Flash Treesitter — select by syntax node |
+
+`f` / `F` / `t` / `T` are also enhanced to work across lines. Press `<Esc>` to
+clear the leftover highlight.
+
+## Surround (mini.surround)
+
+Moved to a `gs` prefix because flash owns `s`.
+
+| Keybinding | Mode | Action |
+|------------|------|--------|
+| `gsa` | Normal/Visual | Add surrounding (e.g. `gsaiw"` wraps a word in quotes) |
+| `gsd` | Normal | Delete surrounding (e.g. `gsd"`) |
+| `gsr` | Normal | Replace surrounding (e.g. `gsr"'` turns `"` into `'`) |
+| `gsf` / `gsF` | Normal | Find surrounding right / left |
+| `gsh` | Normal | Highlight surrounding |
+
+## Treesitter Text Objects
+
+Structure-aware selections and motions (need the parser for that language).
+
+| Keybinding | Mode | Action |
+|------------|------|--------|
+| `af` / `if` | Visual/Op | Around / inside function (e.g. `vif`, `daf`) |
+| `ac` / `ic` | Visual/Op | Around / inside class |
+| `]f` / `[f` | Normal | Jump to next / previous function |
 
 ## Terminal (ToggleTerm)
 
@@ -61,11 +129,23 @@ Inside Telescope:
 | `<A-w>` | Normal/Terminal | Toggle horizontal terminal |
 | `<A-q>` | Normal/Terminal | Toggle floating terminal |
 
-Inside terminal:
-- Same keybindings to toggle off
-- Type `exit` to close terminal
+On Linux the terminal uses your `$SHELL` (zsh on Kali). Inside the terminal,
+press the same key to toggle it off, or type `exit`.
 
-## Git (LazyGit)
+## Git Hunks (gitsigns)
+
+In-buffer staging/preview, complementing lazygit.
+
+| Keybinding | Mode | Action |
+|------------|------|--------|
+| `]c` / `[c` | Normal | Next / previous changed hunk (falls back to diff nav in diff mode) |
+| `<Space>hs` | Normal | Stage hunk |
+| `<Space>hr` | Normal | Reset hunk |
+| `<Space>hp` | Normal | Preview hunk |
+| `<Space>hb` | Normal | Blame current line (full) |
+| `<Space>hd` | Normal | Diff this file |
+
+## Git UI (LazyGit)
 
 | Keybinding | Mode | Action |
 |------------|------|--------|
@@ -73,34 +153,61 @@ Inside terminal:
 
 ## LSP (Code Intelligence)
 
+Neovim 0.11+ ships some LSP defaults on attach (`grn` rename, `gra` code action,
+`grr` references, `gri` implementation, `gO` document symbols). This config adds:
+
 | Keybinding | Mode | Action |
 |------------|------|--------|
 | `gd` | Normal | Go to definition |
-| `K` | Normal | Show hover documentation |
+| `K` | Normal | Hover documentation |
 | `<Space>r` | Normal | Rename symbol |
 | `<Space>la` | Normal | Code actions (quick fixes) |
 | `<Space>lr` | Normal | Find references |
-| `<Space>vd` | Normal | Show diagnostics (errors) |
+| `<Space>vd` | Normal | Show line diagnostics (float) |
+| `<Space>vs` | Normal | Document symbols (Telescope) |
 | `<Space>vws` | Normal | Search workspace symbols |
-| `[d` | Normal | Go to previous diagnostic |
-| `]d` | Normal | Go to next diagnostic |
-| `<C-h>` | Insert | Show signature help |
+| `[d` | Normal | Previous diagnostic |
+| `]d` | Normal | Next diagnostic |
+| `<C-h>` | Insert | Signature help |
 
-## Autocompletion (nvim-cmp)
+## Autocompletion (blink.cmp)
+
+Replaces nvim-cmp. Uses the "enter" preset.
 
 | Keybinding | Mode | Action |
 |------------|------|--------|
-| `<C-Space>` | Insert | Trigger completion |
-| `<C-n>` | Insert | Next completion item |
-| `<C-p>` | Insert | Previous completion item |
-| `<CR>` | Insert | Confirm selection |
+| `<C-Space>` | Insert | Trigger / toggle completion menu & docs |
+| `<C-n>` / `<C-p>` | Insert | Next / previous item (also `Up`/`Down`) |
+| `<CR>` | Insert | Accept selected item |
+| `<C-e>` | Insert | Cancel / close the menu |
+
+## AI (Claude Code)
+
+Requires the `claude` CLI on your PATH.
+
+| Keybinding | Mode | Action |
+|------------|------|--------|
+| `<Space>ac` | Normal | Toggle / focus the Claude terminal |
+| `<Space>ab` | Normal | Add current buffer to context |
+| `<Space>as` | Visual | Send selection to Claude |
+| `<Space>aa` | Normal | Accept the proposed diff |
+| `<Space>ad` | Normal | Reject the proposed diff |
+
+## Markdown
+
+| Keybinding | Mode | Action |
+|------------|------|--------|
+| `<Space>op` | Normal | Preview in a real browser (live reload) |
+| `<Space>oc` | Normal | Stop the browser preview |
+| `<Space>or` | Normal | Toggle in-buffer markdown rendering |
 
 ## Tips for Kali Linux
 
-1. **Quick Python scripting**: Open file with `<C-p>`, LSP provides autocomplete
-2. **Search in project**: `<Space>ps` to grep across all files
-3. **Terminal workflow**: `<A-q>` for floating terminal to run scripts
-4. **Fast file switching**: Add frequently used files to Harpoon with `<Space>a`
+1. **Quick Python scripting**: `<C-p>` to open a file, LSP provides autocomplete.
+2. **Search in project**: `<Space>ps` to grep across all files.
+3. **Terminal workflow**: `<A-q>` for a floating terminal to run scripts.
+4. **Fast file switching**: tag your working files with `<Space>m`, jump via `<Space>M`.
+5. **Jump anywhere on screen**: `s` + target characters + label (flash).
 
 ## Practice Exercises
 
@@ -109,38 +216,36 @@ Inside terminal:
 2. Toggle file tree: `<Space>e`
 3. Navigate and open a file with `Enter`
 4. Close the tree: `<Space>e`
-5. Find another file: `<C-p>` and type part of filename
+5. Find another file: `<C-p>` and type part of the filename
 6. Search for text in project: `<Space>ps` and type a keyword
 
-### Exercise 2: Harpoon Workflow
+### Exercise 2: Grapple Workflow
 1. Open 3-4 files you work with often
-2. Add each to harpoon: `<Space>a`
-3. Open harpoon menu: `<Space>h`
-4. Jump between files: `<A-1>`, `<A-2>`, `<A-3>`
-5. Cycle through them: `<Tab>` and `<S-Tab>`
+2. Tag each with `<Space>m`
+3. Open the tags menu with `<Space>M`
+4. Jump between tagged files from the menu
 
 ### Exercise 3: Terminal Integration
 1. Open floating terminal: `<A-q>`
-2. Run a command (e.g., `ls` or `python --version`)
+2. Run a command (e.g. `ls` or `python --version`)
 3. Hide terminal: `<A-q>`
 4. Open horizontal terminal: `<A-w>`
 5. Toggle it off: `<A-w>`
 
 ### Exercise 4: LSP Features
-1. Open a Python or JavaScript file
+1. Open a Python or Lua file
 2. Hover over a function: press `K` to see docs
-3. Go to a function definition: `gd`
+3. Go to a definition: `gd`
 4. Go back: `<C-o>`
 5. Find all references: `<Space>lr`
-6. Try renaming a variable: `<Space>r`
+6. Rename a variable: `<Space>r`
 
 ### Exercise 5: Complete Workflow
-Combine everything:
 1. `<C-p>` to find and open a file
-2. `<Space>a` to add it to harpoon
+2. `<Space>m` to tag it
 3. `gd` to jump to a definition
 4. `<Space>ps` to search for related code
-5. `<A-q>` to open terminal and run tests
+5. `<A-q>` to open a terminal and run tests
 6. `<Space>gg` to commit your changes
 
 ## Legend
@@ -153,7 +258,7 @@ Combine everything:
 | `<Space>` | Space bar (Leader) |
 | `<CR>` | Enter |
 | `<Esc>` | Escape |
-| `<Tab>` | Tab |
+| `Op` | Operator-pending (after `d`, `y`, `c`, `v`…) |
 
 ---
 

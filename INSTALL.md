@@ -1,108 +1,158 @@
 # Installation Guide
 
-Step-by-step guide to install and configure this Neovim setup on your system.
+Step-by-step guide to install and configure this Neovim setup on a Linux system
+(written for **Kali**, works on any Debian-based distro).
+
+> **Important:** this config needs **Neovim 0.12+** (nvim-treesitter's `main`
+> branch calls 0.12-only APIs). Kali's apt `neovim` is currently **0.11.x — too
+> old** — so Step 2 installs an official Neovim build into your home directory
+> instead. Plugins are managed by **lazy.nvim**, which bootstraps itself on first
+> launch (no `:PackerSync`).
 
 ---
 
 ## TL;DR - Copy-Paste for Fresh Kali
 
-If you just want to copy-paste everything and get it working:
-
 ```bash
-# 1. Install all dependencies
-sudo apt update && sudo apt install -y neovim git ripgrep fd-find nodejs npm curl unzip build-essential
+# 1. System dependencies (note: NOT the apt 'neovim' — it's too old)
+sudo apt update && sudo apt install -y \
+  git ripgrep fd-find nodejs npm curl unzip build-essential golang xclip
 
-# 2. Install lazygit
-# Get latest version number
+# 2. Neovim 0.12+ (nightly), user-local — leaves any system nvim untouched
+curl -fLO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz
+mkdir -p ~/.local ~/.local/bin
+tar -xzf nvim-linux-x86_64.tar.gz -C ~/.local/ && rm nvim-linux-x86_64.tar.gz
+ln -sf ~/.local/nvim-linux-x86_64/bin/nvim ~/.local/bin/nvim
+grep -q '.local/bin' ~/.zshrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+export PATH="$HOME/.local/bin:$PATH"
+
+# 3. tree-sitter CLI (nvim-treesitter main branch compiles parsers locally)
+npm config get prefix >/dev/null 2>&1 || npm config set prefix ~/.npm-global
+grep -q '.npm-global/bin' ~/.zshrc || echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.zshrc
+export PATH="$HOME/.npm-global/bin:$PATH"
+npm install -g tree-sitter-cli
+
+# 4. fd is named 'fdfind' on Debian — expose it as 'fd' for Telescope
+ln -sf "$(command -v fdfind)" ~/.local/bin/fd
+
+# 5. lazygit
 LAZYGIT_VERSION="0.44.1"
 curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-tar xf lazygit.tar.gz lazygit
-sudo install lazygit /usr/local/bin
-rm lazygit lazygit.tar.gz
+tar xf lazygit.tar.gz lazygit && sudo install lazygit /usr/local/bin && rm lazygit lazygit.tar.gz
 
-# 3. Install Nerd Font
+# 6. Nerd Font
 mkdir -p ~/.local/share/fonts && cd ~/.local/share/fonts
-curl -fLo "JetBrainsMono.zip" https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
-unzip JetBrainsMono.zip && rm JetBrainsMono.zip && fc-cache -fv && cd ~
+curl -fLo JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
+unzip -o JetBrainsMono.zip && rm JetBrainsMono.zip && fc-cache -fv && cd ~
 
-# 4. Clean old configs (if any)
-rm -rf ~/.config/nvim ~/.local/share/nvim ~/.cache/nvim
-
-# 5. Clone this repo
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git ~/.config/nvim
-
-# 6. Install plugins (ignore first-run errors, they are normal!)
-nvim -c "autocmd User PackerComplete quitall" -c "PackerSync"
-
-# 7. Run again to finish setup
-nvim -c "autocmd User PackerComplete quitall" -c "PackerSync"
+# 7. Clone this config, then launch — lazy.nvim installs everything on first run
+git clone https://github.com/phwrscr1pt/nvim-config.git ~/.config/nvim
+nvim   # wait for the Lazy UI to finish, then :qa and reopen
 ```
 
-**After running above:** Set your terminal font to "JetBrainsMono Nerd Font Mono", restart terminal, then run `nvim`.
+**After running the above:** set your terminal font to **"JetBrainsMono Nerd Font
+Mono"**, restart the terminal, then run `nvim`.
 
 ---
 
 ## Requirements
 
-- Neovim 0.10+
+- **Neovim 0.12+** (nightly) — required by nvim-treesitter `main`
 - Git
-- Node.js (for some LSP servers)
-- ripgrep (for Telescope live grep)
-- fd (for Telescope file finder)
-- lazygit (for Git integration)
-- Nerd Font (for icons)
+- **tree-sitter CLI + a C compiler** (gcc from `build-essential`) — treesitter compiles parsers locally
+- Node.js + npm (for the tree-sitter CLI and some LSP servers)
+- ripgrep (Telescope live grep)
+- fd / fd-find (Telescope file finder)
+- lazygit (Git UI)
+- xclip / xsel or wl-clipboard (system clipboard `"+`)
+- A Nerd Font (icons)
+- Go (for the gopls LSP server)
 
 ---
 
 ## Fresh Kali Linux Installation (Complete Guide)
 
-If you have a fresh Kali with nothing installed, follow these steps carefully.
-
-### Step 1: Update System
+### Step 1: Update + install system dependencies
 
 ```bash
 sudo apt update && sudo apt upgrade -y
+sudo apt install -y git ripgrep fd-find nodejs npm curl unzip build-essential golang xclip
 ```
 
-### Step 2: Install ALL Dependencies
+> Do **not** rely on the apt `neovim` package — it's 0.11.x and this config needs
+> 0.12+. Step 2 installs a newer Neovim in your home directory. (Installing the
+> apt one too does no harm; the home-directory one just needs to win on `PATH`.)
+
+### Step 2: Install Neovim 0.12+ (nightly, user-local)
 
 ```bash
-sudo apt install -y neovim git ripgrep fd-find nodejs npm curl unzip build-essential
+curl -fLO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz
+mkdir -p ~/.local ~/.local/bin
+tar -xzf nvim-linux-x86_64.tar.gz -C ~/.local/
+rm nvim-linux-x86_64.tar.gz
+ln -sf ~/.local/nvim-linux-x86_64/bin/nvim ~/.local/bin/nvim
 ```
 
-### Step 3: Install lazygit (for Git integration)
+Make `~/.local/bin` win on your PATH (use `~/.bashrc` if your shell is bash):
+```bash
+grep -q '.local/bin' ~/.zshrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+Verify — must be 0.12.0 or later (nightly reports `0.12.x-dev` / `0.13.x-dev`):
+```bash
+nvim --version | head -1
+```
+
+> To revert later: `rm ~/.local/bin/nvim ~/.local/nvim-linux-x86_64 -r` — your
+> system nvim (if installed) is untouched.
+
+### Step 3: tree-sitter CLI + compiler
+
+nvim-treesitter's `main` branch compiles each parser locally, so it needs the
+tree-sitter CLI and a C compiler (`gcc`, from `build-essential` in Step 1).
 
 ```bash
-# Get latest version number
+# Install the CLI user-level (no sudo). Set an npm prefix first if you don't have one:
+npm config get prefix || npm config set prefix ~/.npm-global
+grep -q '.npm-global/bin' ~/.zshrc || echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+npm install -g tree-sitter-cli
+tree-sitter --version   # verify
+```
+
+### Step 4: Expose fd (Debian names it fdfind)
+
+```bash
+ln -sf "$(command -v fdfind)" ~/.local/bin/fd
+```
+
+### Step 5: Install lazygit
+
+```bash
 LAZYGIT_VERSION="0.44.1"
 curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
 tar xf lazygit.tar.gz lazygit
 sudo install lazygit /usr/local/bin
 rm lazygit lazygit.tar.gz
+lazygit --version   # verify
 ```
 
-Verify:
-```bash
-lazygit --version
-```
-
-### Step 4: Install Nerd Font (IMPORTANT - do this BEFORE opening Neovim)
+### Step 6: Install a Nerd Font (do this BEFORE opening Neovim)
 
 ```bash
-mkdir -p ~/.local/share/fonts
-cd ~/.local/share/fonts
-curl -fLo "JetBrainsMono.zip" https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
-unzip JetBrainsMono.zip
+mkdir -p ~/.local/share/fonts && cd ~/.local/share/fonts
+curl -fLo JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
+unzip -o JetBrainsMono.zip
 rm JetBrainsMono.zip
 fc-cache -fv
 cd ~
 ```
 
-Then set your terminal font to **"JetBrainsMono Nerd Font"**:
-- **Kali Terminal**: Right-click → Preferences → Custom font → "JetBrainsMono Nerd Font Mono"
-- **Qterminal**: Edit → Preferences → Appearance → Font
+Then set your terminal font to **"JetBrainsMono Nerd Font Mono"**:
+- **Kali Terminal / QTerminal**: Preferences → Appearance/Font
 
-### Step 5: Backup Existing Config (if any)
+### Step 7: Back up any existing config
 
 ```bash
 mv ~/.config/nvim ~/.config/nvim.backup 2>/dev/null
@@ -110,74 +160,49 @@ mv ~/.local/share/nvim ~/.local/share/nvim.backup 2>/dev/null
 mv ~/.cache/nvim ~/.cache/nvim.backup 2>/dev/null
 ```
 
-### Step 6: Clone This Repository
+### Step 8: Clone this repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git ~/.config/nvim
+git clone https://github.com/phwrscr1pt/nvim-config.git ~/.config/nvim
 ```
 
-### Step 7: First Run - Install Plugins (IMPORTANT!)
+### Step 9: First launch — lazy.nvim installs everything
 
-**This step has multiple parts. Read carefully.**
-
-**7a.** Open Neovim:
 ```bash
 nvim
 ```
 
-**7b.** You will see errors like this - **THIS IS NORMAL ON FIRST RUN**:
-```
-Error running config for toggleterm.nvim: module 'toggleterm' not found
-```
+- On first launch **lazy.nvim bootstraps itself** (clones its own repo) and opens
+  the **Lazy UI**, installing every plugin automatically. This is normal.
+- nvim-treesitter then **compiles parsers** in the background (needs the
+  tree-sitter CLI + compiler from Step 3). Give it a moment.
+- When the Lazy UI shows everything installed, quit fully with `:qa`, then reopen
+  `nvim`. Now it's ready.
+- Later, manage plugins with `:Lazy` (UI) or `:Lazy sync` (install+update+clean).
+- To pin plugins to the exact committed versions: `:Lazy restore` (reads
+  `lazy-lock.json`).
 
-These errors happen because plugins haven't been downloaded yet. **Ignore them.**
+### Step 10: Verify
 
-**7c.** Wait 5-10 seconds for Packer to auto-bootstrap, then run:
-```vim
-:PackerSync
-```
-
-**7d.** Wait for all plugins to download (you'll see progress in a split window).
-
-**7e.** When done, **QUIT Neovim completely**:
-```vim
-:qa
-```
-
-**7f.** Open Neovim again:
-```bash
-nvim
-```
-
-**7g.** Run PackerSync ONE MORE TIME to compile everything:
-```vim
-:PackerSync
-```
-
-**7h.** Quit and reopen Neovim:
-```bash
-nvim
-```
-
-Now everything should work without errors!
-
-### Step 8: Verify Installation
-
-Run these commands in Neovim to verify everything works:
+Run these inside Neovim:
 
 | Check | Command | Expected |
 |-------|---------|----------|
-| Plugins | `:PackerStatus` | All plugins listed |
-| LSP | `:LspInfo` | Shows attached servers |
-| Mason | `:Mason` | Opens Mason UI |
-| File finder | `Ctrl+p` | Opens Telescope |
-| File tree | `Space e` | Opens file explorer |
-| Terminal | `Alt+q` | Opens floating terminal |
-| Git | `Space g g` | Opens lazygit |
+| Plugins | `:Lazy` | All plugins installed, no errors |
+| LSP | `:checkhealth vim.lsp` | Shows attached servers (there is no `:LspInfo` on 0.11+) |
+| Mason | `:Mason` | Server list; pyright/bashls/gopls/clangd/lua_ls installed |
+| Treesitter | `:checkhealth nvim-treesitter` | Nvim 0.12+ OK, parsers installed |
+| File finder | `<C-p>` | Telescope opens |
+| Live grep | `<Space>ps` | Search prompt (needs ripgrep) |
+| File tree | `<Space>e` | nvim-tree opens |
+| Terminal | `<A-q>` | Floating terminal |
+| Git | `<Space>gg` | lazygit opens |
+
+---
 
 ## LSP Servers
 
-LSP servers are auto-installed via Mason:
+Auto-installed via Mason on first launch:
 
 | Language | Server |
 |----------|--------|
@@ -187,203 +212,129 @@ LSP servers are auto-installed via Mason:
 | C/C++ | clangd |
 | Lua | lua_ls |
 
-To install additional servers:
-```vim
-:Mason
-```
+Manage with `:Mason` (press `i` to install, `U` to update all).
 
-## Verify Installation
-
-Run this checklist in Neovim:
-
-| Check | Command |
-|-------|---------|
-| Plugins loaded | `:PackerStatus` |
-| LSP working | `:LspInfo` |
-| Mason servers | `:Mason` |
-| Telescope | `<C-p>` |
-| File tree | `<Space>e` |
-| Terminal | `<Alt-q>` |
+---
 
 ## Troubleshooting
 
-### "module 'toggleterm' not found" or similar errors on first run
+### Treesitter errors on launch (`attempt to index field 'list'`, etc.)
+Your Neovim is older than 0.12. Check `nvim --version` — if it's 0.11.x, the
+home-directory nvim from Step 2 isn't winning on PATH. Confirm with
+`command -v nvim` (should be `~/.local/bin/nvim`) and that `~/.local/bin` is
+prepended to PATH in your shell rc.
 
-**This is NORMAL on first run!** The error happens because:
-1. Neovim tries to load plugin configs
-2. But plugins haven't been downloaded yet
+### No syntax highlighting / parsers won't compile
+Confirm `tree-sitter --version` and a compiler (`gcc --version`) are on PATH, then
+re-run parser install: open a file of that language, or
+`:lua require('nvim-treesitter').install({'python'})`. Check
+`:checkhealth nvim-treesitter`.
 
-**Solution:**
-```bash
-# 1. Ignore the errors and run:
-:PackerSync
-
-# 2. QUIT Neovim completely:
-:qa
-
-# 3. Open again and run PackerSync again:
-nvim
-:PackerSync
-
-# 4. Quit and reopen:
-:qa
-nvim
-```
-
-If errors persist after this, delete everything and start fresh:
-```bash
-rm -rf ~/.local/share/nvim
-rm -rf ~/.cache/nvim
-nvim
-:PackerSync
-:qa
-nvim
-```
-
-### Plugins not installing
+### Plugins didn't install / want a clean slate
 ```vim
-:PackerSync
+:Lazy sync
 ```
-
-If that doesn't work, check your internet connection and try:
-```vim
-:PackerClean
-:PackerInstall
-:PackerCompile
+Or fully reset plugin state (keeps your config, re-installs on next launch):
+```bash
+rm -rf ~/.local/share/nvim/lazy ~/.local/state/nvim/lazy
+nvim   # lazy re-bootstraps and reinstalls
 ```
 
 ### LSP not working
 ```vim
-:LspInfo
+:checkhealth vim.lsp
 :Mason
 ```
-Install missing servers from Mason UI. Press `i` to install.
-
-### Mason servers fail to install
-
-Some servers need additional tools:
+Install missing servers from the Mason UI (`i`). Some need base tooling:
 ```bash
-# For most servers
-sudo apt install -y build-essential
-
-# For Python (pyright)
-sudo apt install -y python3 python3-pip
-
-# For C/C++ (clangd)
-sudo apt install -y clang
-
-# For Go (gopls)
-sudo apt install -y golang
+sudo apt install -y python3 python3-pip   # pyright
+sudo apt install -y clang                 # clangd (or let Mason fetch it)
+sudo apt install -y golang                # gopls
 ```
 
-### lazygit not working (`<Space>gg` does nothing)
+### Completion menu looks plain / a "using Lua matcher" warning
+blink.cmp couldn't fetch its prebuilt Rust matcher; completion still works via the
+Lua fallback. Usually a transient network issue — `:Lazy build blink.cmp` retries.
 
-Make sure lazygit is installed:
-```bash
-lazygit --version
+### Clipboard `<Space>y` / `<Space>P` do nothing
+The `"+` register needs a provider. On X11: `sudo apt install xclip` (or xsel).
+On Wayland: `sudo apt install wl-clipboard`. Verify with `:checkhealth provider`.
 
-# If not found, install it:
-# Get latest version number
-LAZYGIT_VERSION="0.44.1"
-curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-tar xf lazygit.tar.gz lazygit
-sudo install lazygit /usr/local/bin
-rm lazygit lazygit.tar.gz
-```
-
-### Icons not showing (boxes or question marks)
-- Make sure you installed a Nerd Font (Step 4)
-- Set your terminal font to "JetBrainsMono Nerd Font Mono"
-- **Restart your terminal completely** (not just open new tab)
-
-### Telescope grep not working
-```bash
-# Check if ripgrep is installed
-rg --version
-
-# If not, install it
-sudo apt install ripgrep
-```
-
-### Telescope file finder slow
-```bash
-# Install fd for faster file finding
-sudo apt install fd-find
-```
+### Icons show as boxes/question marks
+Install a Nerd Font (Step 6), set the terminal font to "JetBrainsMono Nerd Font
+Mono", and **fully restart the terminal**.
 
 ### Colors look wrong
 ```bash
-# Make sure your terminal supports true colors
-echo $TERM
-# Should be xterm-256color or similar
+echo $TERM        # want xterm-256color or similar
 ```
+Add `export TERM=xterm-256color` to your shell rc if needed, then restart the
+terminal.
 
-Add to your `~/.bashrc` or `~/.zshrc`:
-```bash
-export TERM=xterm-256color
-```
-
-Then restart terminal or run:
-```bash
-source ~/.bashrc
-```
+---
 
 ## Updating
 
-Pull latest changes:
+Pull the latest config:
 ```bash
-cd ~/.config/nvim
-git pull
+cd ~/.config/nvim && git pull
 ```
-
-Update plugins:
+Update plugins (moves past the lockfile) or pin to it:
 ```vim
-:PackerSync
+:Lazy sync        " update to latest
+:Lazy restore     " pin to lazy-lock.json (match the committed versions)
 ```
+Update LSP servers: `:Mason`, then press `U`.
 
-Update LSP servers:
-```vim
-:Mason
-```
-Press `U` to update all.
+Update Neovim itself (nightly) — re-run Step 2 (extracting over the old dir is fine).
+
+---
 
 ## Uninstall
 
 ```bash
-rm -rf ~/.config/nvim
-rm -rf ~/.local/share/nvim
-rm -rf ~/.cache/nvim
+rm -rf ~/.config/nvim ~/.local/share/nvim ~/.local/state/nvim ~/.cache/nvim
+# and, if you installed the user-local Neovim:
+rm -rf ~/.local/bin/nvim ~/.local/nvim-linux-x86_64
 ```
+
+---
 
 ## File Structure
 
 ```
 ~/.config/nvim/
-├── init.lua                 # Entry point
+├── init.lua                    # Entry point (bootstraps lazy.nvim; guards Nvim < 0.11)
+├── lazy-lock.json              # Pinned plugin commits (committed)
 ├── lua/
 │   ├── core/
-│   │   ├── options.lua      # Vim settings
-│   │   └── keymaps.lua      # General keybindings
+│   │   ├── options.lua         # Vim settings
+│   │   └── keymaps.lua         # General keybindings
 │   └── plugins/
-│       ├── init.lua         # Plugin list (Packer)
-│       ├── lsp.lua          # LSP configuration
-│       ├── telescope.lua    # Fuzzy finder
-│       ├── nvim-tree.lua    # File explorer
-│       ├── harpoon.lua      # Quick file navigation
-│       ├── lualine.lua      # Status line
-│       └── toggleterm.lua   # Terminal
-├── plugin/
-│   └── packer_compiled.lua  # Auto-generated
-├── INSTALL.md               # This file
-├── KEYBINDINGS.md           # Shortcut reference
-└── VIM_TUTORIAL.md          # Vim basics guide
+│       ├── init.lua            # Plugin specs + lazy-load triggers
+│       ├── lsp.lua             # Native LSP (mason + vim.lsp + LspAttach)
+│       ├── blink.lua           # Completion
+│       ├── treesitter.lua      # Syntax + textobjects
+│       ├── nvim-tree.lua       # File explorer
+│       ├── grapple.lua         # Quick file marks
+│       ├── gitsigns.lua        # Git hunks
+│       ├── whichkey.lua        # Keymap discovery
+│       ├── project.lua         # Project root + recent
+│       ├── lualine.lua         # Status line
+│       ├── toggleterm.lua      # Terminal
+│       ├── claudecode.lua      # Claude Code (AI)
+│       ├── live-preview.lua    # Browser markdown preview
+│       └── render-markdown.lua # In-buffer markdown render
+├── INSTALL.md                  # This file
+├── KEYBINDINGS.md              # Shortcut reference
+└── PLUGINS.md                  # Plugin guide
 ```
+
+---
 
 ## Documentation
 
 ### Suggested Learning Order
-
-Follow this path to learn effectively:
 
 | Step | File | What You'll Learn | Time |
 |------|------|-------------------|------|
@@ -393,20 +344,6 @@ Follow this path to learn effectively:
 | 4 | [PLUGINS.md](PLUGINS.md) | File navigation, LSP, Git integration | 30 min |
 | 5 | [TMUX_TUTORIAL.md](TMUX_TUTORIAL.md) | Terminal multiplexing | 30 min |
 | 6 | [VI_MODE_MANUAL.md](VI_MODE_MANUAL.md) | Vi mode in shell and other tools | 15 min |
-
-### Quick Links
-
-- [KEYBINDINGS.md](KEYBINDINGS.md) - All keyboard shortcuts
-- [VIM_TUTORIAL.md](VIM_TUTORIAL.md) - Learn Vim basics
-- [PLUGINS.md](PLUGINS.md) - Plugin guide and workflows
-- [TMUX_TUTORIAL.md](TMUX_TUTORIAL.md) - Terminal multiplexer
-- [VI_MODE_MANUAL.md](VI_MODE_MANUAL.md) - Vi mode everywhere
-
-## One-Line Install (Advanced)
-
-```bash
-sudo apt update && sudo apt install -y neovim git ripgrep fd-find nodejs npm curl unzip && git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git ~/.config/nvim && nvim +PackerSync
-```
 
 ---
 

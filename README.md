@@ -14,7 +14,7 @@ is lazy-loaded.
 | Platform | Guide |
 |---|---|
 | Linux (Kali / Debian) | [INSTALL_LINUX.md](INSTALL_LINUX.md) |
-| macOS | [INSTALL_MACOS.md](INSTALL_MACOS.md) |
+| macOS | [INSTALL_MACOS.md](INSTALL_MACOS.md) · [ฉบับภาษาไทย](INSTALL_MACOS_TH.md) |
 | Windows | [INSTALL_WINDOWS.md](INSTALL_WINDOWS.md) |
 
 Each one ends by handing you to **[SETUP.md](SETUP.md)**, which is shared: first

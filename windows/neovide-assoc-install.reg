@@ -1,8 +1,25 @@
-Windows Registry Editor Version 5.00
+﻿Windows Registry Editor Version 5.00
 
 ; ============================================================
 ; Neovide as the default editor for code/text files (per-user)
 ; No admin rights needed. Undo with undo-neovide-assoc.ps1
+;
+; *** READ BEFORE RUNNING - THIS CHANGES YOUR MACHINE ***
+;
+; Importing this CLEARS the existing UserChoice default-app setting for
+;   .html .htm .svg .xml .txt .log .ps1
+; Those seven are left with NO default afterwards: double-clicking one
+; shows the "Pick an app" dialog until you choose again. That is required -
+; Windows will not let a registry import insert a new handler otherwise.
+;
+; Windows also will not let the registry FORCE a default app, so after
+; importing you must still pick Neovide once yourself in
+;   Settings > Apps > Default apps
+; The UserChoice entries cleared above cannot be restored automatically
+; (they are hashed); undo-neovide-assoc.ps1 removes what this file adds,
+; but you re-pick those seven by hand.
+;
+; Full write-up, including the .py / .csv / .bat behaviour: INSTALL_WINDOWS.md
 ; ============================================================
 
 ; --- 1. The application itself (Open-with dialog entry) ---

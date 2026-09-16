@@ -88,6 +88,13 @@ return {
     keys = {
       { "<A-w>", "<cmd>ToggleTerm direction=horizontal<cr>", mode = { "n", "t" }, desc = "Terminal (horizontal)" },
       { "<A-q>", "<cmd>ToggleTerm direction=float<cr>",      mode = { "n", "t" }, desc = "Terminal (float)" },
+      -- Alias for <A-q>. NORMAL MODE ONLY, deliberately.
+      -- A `t`-mode <C-\> would shadow <C-\><C-n>, the only way out of
+      -- terminal mode, and this config defines no other terminal escape --
+      -- lazygit, claudecode (provider = "native") and plain :terminal would
+      -- all trap you. Matters on macOS: <A-*> keys do not fire while the
+      -- Thai input source is active, so this is the way in while typing Thai.
+      { "<C-\\>", "<cmd>ToggleTerm direction=float<cr>", mode = "n", desc = "Terminal (float)" },
     },
     config = function() require("plugins.toggleterm") end,
   },

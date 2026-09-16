@@ -34,9 +34,10 @@ vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 
--- Neovide (GUI). NOTE: this block is a WINDOWS workaround and is inert on Linux
--- (it only fires under Neovide). Linux terminals (kitty/alacritty/gnome-terminal)
--- shape Thai correctly via HarfBuzz, so you do NOT need Neovide on Kali.
+-- Neovide (GUI). NOTE: this block is a WINDOWS workaround and is inert everywhere
+-- else (it only fires under Neovide). Linux terminals (kitty/alacritty/gnome-terminal)
+-- and macOS terminals (WezTerm/CoreText) shape Thai correctly, so you do NOT need
+-- Neovide on Kali or on the Mac.
 -- Windows Terminal AtlasEngine cannot shape Thai combining marks
 -- (สระ/วรรณยุกต์ = Unicode Mn) without sideways drift/jitter, so Thai-heavy work is
 -- done in Neovide, which draws properly shaped glyphs. Noto Sans Thai carries real
@@ -52,6 +53,12 @@ if vim.g.neovide then
   -- factor, not a per-font size. 0.9 renders everything at 90%; live-tweak with
   -- `:lua vim.g.neovide_scale_factor = N` and copy the value you like here.
   vim.g.neovide_scale_factor = 0.9
+  -- macOS/Neovide: left Option acts as Meta so <A-w>/<A-q>/<A-s> work; right
+  -- Option still composes. Inert on Windows/Linux and in every terminal, and
+  -- a no-op in WezTerm (left-Option-as-Meta is already its default).
+  -- Confirm the spelling on the Mac with :h neovide-settings (the older name
+  -- was neovide_input_macos_alt_is_meta, a boolean).
+  vim.g.neovide_input_macos_option_key_is_meta = "only_left"
 end
 
 -- Misc

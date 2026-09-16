@@ -22,7 +22,8 @@ vim.keymap.set("n", "<leader>gg", ":LazyGit<CR>", { desc = "LazyGit" })
 -- System clipboard (explicit + register).
 -- On Linux the "+ register needs a provider installed: xclip or xsel (X11), or
 -- wl-clipboard (Wayland). Without one these maps silently do nothing --
--- `:checkhealth provider` will say so. On Windows it works out of the box.
+-- `:checkhealth vim.provider` will say so. On Windows and macOS it works out of
+-- the box (macOS uses pbcopy/pbpaste; nothing to install).
 -- <leader>P (capital) is used for paste to avoid a prefix clash with <leader>ps (live grep).
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to clipboard" })   -- Space y
 vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank line to clipboard" })       -- Space Y

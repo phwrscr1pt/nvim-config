@@ -5,8 +5,9 @@
 --   • native inline diffs with accept / reject     (<leader>aa / <leader>ad)
 --   • a toggleable Claude terminal                 (<leader>ac)
 --
--- Requires the `claude` CLI on Neovim's PATH (check with `:!which claude` on Linux, `:!where.exe claude` on Windows;
--- restart the terminal after installing the CLI). We use the "native" terminal
+-- Requires the `claude` CLI on Neovim's PATH (check with `:echo exepath('claude')`,
+-- which is identical on all three platforms and tests the PATH nvim actually
+-- sees; restart the terminal after installing the CLI). We use the "native" terminal
 -- provider so we don't pull in the heavy snacks.nvim just for the Claude window.
 require("claudecode").setup({
   terminal = { provider = "native" },

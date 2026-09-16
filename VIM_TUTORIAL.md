@@ -98,6 +98,31 @@ Vim has different modes for different tasks:
 | `s` | Substitute character |
 | `S` | Substitute entire line |
 
+> **Note:** In this config `s` / `S` are remapped to **flash** (jump). For the substitute behavior use `cl` (= `s`) and `cc` (= `S`).
+
+## Exiting Insert Mode (→ Normal)
+
+When you're done typing, return to Normal mode to navigate and run commands:
+
+| Key | Action |
+|-----|--------|
+| `<Esc>` | The standard way — leave Insert mode |
+| `<C-[>` | Ctrl+`[` — identical to `<Esc>` (same key code) |
+| `<C-c>` | Also exits, but **skips** `InsertLeave` autocmds + abbreviations (prefer `<Esc>`) |
+| `<C-\><C-n>` | Force Normal mode from *any* mode (also leaves a terminal buffer) |
+
+**Bonus — `<C-o>`: run ONE Normal command, then stay in Insert:**
+
+```
+<C-o>O    Open a line above, keep typing
+<C-o>0    Jump to start of line mid-typing
+<C-o>zz   Center the screen without leaving Insert
+```
+
+> `<Esc>` is all you need day-to-day. Some people map `jk` → `<Esc>` in insert
+> mode to avoid reaching for Escape; this config keeps the default `<Esc>`
+> (you can add `inoremap jk <Esc>` yourself if you ever want it).
+
 ## Editing (Normal Mode)
 
 ### Delete
@@ -328,8 +353,8 @@ Search:      / ? n N * #
 
 INSERT MODE
 -----------
-Enter:  i a o I A O s S
-Exit:   <Esc>
+Enter:  i a o I A O   (s/S -> flash; use cl/cc to substitute)
+Exit:   <Esc>  (or <C-[> / <C-c>)
 
 VISUAL MODE
 -----------

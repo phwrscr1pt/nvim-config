@@ -1,0 +1,2114 @@
+﻿Windows Registry Editor Version 5.00
+
+; ============================================================
+; Neovide as the default editor for code/text files (per-user)
+; No admin rights needed. Undo with undo-neovide-assoc.ps1
+;
+; *** READ BEFORE RUNNING - THIS CHANGES YOUR MACHINE ***
+;
+; Importing this CLEARS the existing UserChoice default-app setting for
+;   .html .htm .svg .xml .txt .log .ps1
+; Those seven are left with NO default afterwards: double-clicking one
+; shows the "Pick an app" dialog until you choose again. That is required -
+; Windows will not let a registry import insert a new handler otherwise.
+;
+; Windows also will not let the registry FORCE a default app, so after
+; importing you must still pick Neovide once yourself in
+;   Settings > Apps > Default apps
+; The UserChoice entries cleared above cannot be restored automatically
+; (they are hashed); undo-neovide-assoc.ps1 removes what this file adds,
+; but you re-pick those seven by hand.
+;
+; Full write-up, including the .py / .csv / .bat behaviour: INSTALL_WINDOWS.md
+; ============================================================
+
+; --- 1. The application itself (Open-with dialog entry) ---
+[HKEY_CURRENT_USER\Software\Classes\Applications\neovide.exe]
+"FriendlyAppName"="Neovide"
+
+[HKEY_CURRENT_USER\Software\Classes\Applications\neovide.exe\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Applications\neovide.exe\SupportedTypes]
+".lua"=""
+".py"=""
+".pyw"=""
+".pyi"=""
+".js"=""
+".mjs"=""
+".cjs"=""
+".ts"=""
+".mts"=""
+".cts"=""
+".tsx"=""
+".jsx"=""
+".json"=""
+".jsonc"=""
+".json5"=""
+".toml"=""
+".yml"=""
+".yaml"=""
+".sh"=""
+".bash"=""
+".zsh"=""
+".fish"=""
+".ps1"=""
+".psm1"=""
+".psd1"=""
+".c"=""
+".h"=""
+".cpp"=""
+".hpp"=""
+".cc"=""
+".cxx"=""
+".hh"=""
+".go"=""
+".rs"=""
+".rb"=""
+".php"=""
+".java"=""
+".kt"=""
+".kts"=""
+".cs"=""
+".fs"=""
+".sql"=""
+".vim"=""
+".ini"=""
+".conf"=""
+".cfg"=""
+".env"=""
+".properties"=""
+".gitignore"=""
+".gitattributes"=""
+".gitconfig"=""
+".gitmodules"=""
+".editorconfig"=""
+".dockerignore"=""
+".npmrc"=""
+".nvmrc"=""
+".prettierrc"=""
+".eslintrc"=""
+".babelrc"=""
+".r"=""
+".pl"=""
+".pm"=""
+".swift"=""
+".scala"=""
+".clj"=""
+".cljs"=""
+".ex"=""
+".exs"=""
+".erl"=""
+".hs"=""
+".ml"=""
+".zig"=""
+".nim"=""
+".dart"=""
+".gradle"=""
+".tf"=""
+".tfvars"=""
+".nix"=""
+".mk"=""
+".cmake"=""
+".diff"=""
+".patch"=""
+".bashrc"=""
+".zshrc"=""
+".profile"=""
+".inputrc"=""
+".md"=""
+".markdown"=""
+".mdx"=""
+".mkd"=""
+".rst"=""
+".adoc"=""
+".asciidoc"=""
+".txt"=""
+".log"=""
+".text"=""
+".csv"=""
+".tsv"=""
+".nfo"=""
+".html"=""
+".htm"=""
+".xhtml"=""
+".css"=""
+".scss"=""
+".sass"=""
+".less"=""
+".xml"=""
+".svg"=""
+".vue"=""
+".svelte"=""
+".astro"=""
+".xsl"=""
+".xslt"=""
+
+; --- 2. Per-extension ProgIds (keeps the Explorer "Type" column meaningful) ---
+[HKEY_CURRENT_USER\Software\Classes\Neovide.lua]
+@="Lua Source File"
+"FriendlyTypeName"="Lua Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.lua\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.lua\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.py]
+@="Python Source File"
+"FriendlyTypeName"="Python Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.py\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.py\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.pyw]
+@="Python Source File"
+"FriendlyTypeName"="Python Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.pyw\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.pyw\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.pyi]
+@="Python Stub File"
+"FriendlyTypeName"="Python Stub File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.pyi\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.pyi\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.js]
+@="JavaScript File"
+"FriendlyTypeName"="JavaScript File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.js\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.js\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mjs]
+@="JavaScript Module"
+"FriendlyTypeName"="JavaScript Module"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mjs\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mjs\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cjs]
+@="CommonJS Module"
+"FriendlyTypeName"="CommonJS Module"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cjs\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cjs\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ts]
+@="TypeScript File"
+"FriendlyTypeName"="TypeScript File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ts\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ts\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mts]
+@="TypeScript Module"
+"FriendlyTypeName"="TypeScript Module"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mts\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mts\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cts]
+@="TypeScript Module"
+"FriendlyTypeName"="TypeScript Module"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cts\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cts\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.tsx]
+@="React TypeScript File"
+"FriendlyTypeName"="React TypeScript File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.tsx\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.tsx\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.jsx]
+@="React JavaScript File"
+"FriendlyTypeName"="React JavaScript File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.jsx\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.jsx\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.json]
+@="JSON File"
+"FriendlyTypeName"="JSON File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.json\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.json\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.jsonc]
+@="JSON File"
+"FriendlyTypeName"="JSON File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.jsonc\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.jsonc\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.json5]
+@="JSON File"
+"FriendlyTypeName"="JSON File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.json5\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.json5\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.toml]
+@="TOML File"
+"FriendlyTypeName"="TOML File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.toml\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.toml\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.yml]
+@="YAML File"
+"FriendlyTypeName"="YAML File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.yml\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.yml\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.yaml]
+@="YAML File"
+"FriendlyTypeName"="YAML File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.yaml\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.yaml\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.sh]
+@="Shell Script"
+"FriendlyTypeName"="Shell Script"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.sh\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.sh\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.bash]
+@="Shell Script"
+"FriendlyTypeName"="Shell Script"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.bash\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.bash\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.zsh]
+@="Shell Script"
+"FriendlyTypeName"="Shell Script"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.zsh\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.zsh\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.fish]
+@="Shell Script"
+"FriendlyTypeName"="Shell Script"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.fish\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.fish\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ps1]
+@="PowerShell Script"
+"FriendlyTypeName"="PowerShell Script"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ps1\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ps1\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.psm1]
+@="PowerShell Module"
+"FriendlyTypeName"="PowerShell Module"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.psm1\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.psm1\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.psd1]
+@="PowerShell Manifest"
+"FriendlyTypeName"="PowerShell Manifest"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.psd1\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.psd1\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.c]
+@="C Source File"
+"FriendlyTypeName"="C Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.c\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.c\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.h]
+@="C Header File"
+"FriendlyTypeName"="C Header File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.h\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.h\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cpp]
+@="C++ Source File"
+"FriendlyTypeName"="C++ Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cpp\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cpp\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.hpp]
+@="C++ Header File"
+"FriendlyTypeName"="C++ Header File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.hpp\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.hpp\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cc]
+@="C++ Source File"
+"FriendlyTypeName"="C++ Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cc\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cc\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cxx]
+@="C++ Source File"
+"FriendlyTypeName"="C++ Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cxx\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cxx\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.hh]
+@="C++ Header File"
+"FriendlyTypeName"="C++ Header File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.hh\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.hh\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.go]
+@="Go Source File"
+"FriendlyTypeName"="Go Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.go\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.go\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.rs]
+@="Rust Source File"
+"FriendlyTypeName"="Rust Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.rs\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.rs\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.rb]
+@="Ruby Source File"
+"FriendlyTypeName"="Ruby Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.rb\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.rb\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.php]
+@="PHP Source File"
+"FriendlyTypeName"="PHP Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.php\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.php\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.java]
+@="Java Source File"
+"FriendlyTypeName"="Java Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.java\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.java\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.kt]
+@="Kotlin Source File"
+"FriendlyTypeName"="Kotlin Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.kt\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.kt\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.kts]
+@="Kotlin Script"
+"FriendlyTypeName"="Kotlin Script"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.kts\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.kts\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cs]
+@="C# Source File"
+"FriendlyTypeName"="C# Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cs\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cs\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.fs]
+@="F# Source File"
+"FriendlyTypeName"="F# Source File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.fs\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.fs\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.sql]
+@="SQL Script"
+"FriendlyTypeName"="SQL Script"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.sql\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.sql\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.vim]
+@="Vim Script"
+"FriendlyTypeName"="Vim Script"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.vim\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.vim\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ini]
+@="Configuration File"
+"FriendlyTypeName"="Configuration File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ini\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ini\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.conf]
+@="Configuration File"
+"FriendlyTypeName"="Configuration File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.conf\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.conf\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cfg]
+@="Configuration File"
+"FriendlyTypeName"="Configuration File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cfg\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cfg\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.env]
+@="Environment File"
+"FriendlyTypeName"="Environment File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.env\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.env\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.properties]
+@="Properties File"
+"FriendlyTypeName"="Properties File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.properties\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.properties\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gitignore]
+@="GITIGNORE File"
+"FriendlyTypeName"="GITIGNORE File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gitignore\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gitignore\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gitattributes]
+@="GITATTRIBUTES File"
+"FriendlyTypeName"="GITATTRIBUTES File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gitattributes\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gitattributes\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gitconfig]
+@="GITCONFIG File"
+"FriendlyTypeName"="GITCONFIG File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gitconfig\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gitconfig\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gitmodules]
+@="GITMODULES File"
+"FriendlyTypeName"="GITMODULES File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gitmodules\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gitmodules\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.editorconfig]
+@="EDITORCONFIG File"
+"FriendlyTypeName"="EDITORCONFIG File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.editorconfig\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.editorconfig\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.dockerignore]
+@="DOCKERIGNORE File"
+"FriendlyTypeName"="DOCKERIGNORE File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.dockerignore\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.dockerignore\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.npmrc]
+@="NPMRC File"
+"FriendlyTypeName"="NPMRC File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.npmrc\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.npmrc\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.nvmrc]
+@="NVMRC File"
+"FriendlyTypeName"="NVMRC File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.nvmrc\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.nvmrc\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.prettierrc]
+@="PRETTIERRC File"
+"FriendlyTypeName"="PRETTIERRC File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.prettierrc\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.prettierrc\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.eslintrc]
+@="ESLINTRC File"
+"FriendlyTypeName"="ESLINTRC File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.eslintrc\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.eslintrc\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.babelrc]
+@="BABELRC File"
+"FriendlyTypeName"="BABELRC File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.babelrc\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.babelrc\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.r]
+@="R File"
+"FriendlyTypeName"="R File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.r\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.r\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.pl]
+@="PL File"
+"FriendlyTypeName"="PL File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.pl\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.pl\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.pm]
+@="PM File"
+"FriendlyTypeName"="PM File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.pm\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.pm\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.swift]
+@="SWIFT File"
+"FriendlyTypeName"="SWIFT File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.swift\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.swift\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.scala]
+@="SCALA File"
+"FriendlyTypeName"="SCALA File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.scala\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.scala\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.clj]
+@="CLJ File"
+"FriendlyTypeName"="CLJ File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.clj\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.clj\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cljs]
+@="CLJS File"
+"FriendlyTypeName"="CLJS File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cljs\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cljs\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ex]
+@="EX File"
+"FriendlyTypeName"="EX File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ex\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ex\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.exs]
+@="EXS File"
+"FriendlyTypeName"="EXS File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.exs\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.exs\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.erl]
+@="ERL File"
+"FriendlyTypeName"="ERL File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.erl\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.erl\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.hs]
+@="HS File"
+"FriendlyTypeName"="HS File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.hs\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.hs\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ml]
+@="ML File"
+"FriendlyTypeName"="ML File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ml\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.ml\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.zig]
+@="ZIG File"
+"FriendlyTypeName"="ZIG File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.zig\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.zig\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.nim]
+@="NIM File"
+"FriendlyTypeName"="NIM File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.nim\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.nim\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.dart]
+@="DART File"
+"FriendlyTypeName"="DART File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.dart\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.dart\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gradle]
+@="GRADLE File"
+"FriendlyTypeName"="GRADLE File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gradle\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.gradle\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.tf]
+@="TF File"
+"FriendlyTypeName"="TF File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.tf\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.tf\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.tfvars]
+@="TFVARS File"
+"FriendlyTypeName"="TFVARS File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.tfvars\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.tfvars\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.nix]
+@="NIX File"
+"FriendlyTypeName"="NIX File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.nix\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.nix\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mk]
+@="MK File"
+"FriendlyTypeName"="MK File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mk\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mk\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cmake]
+@="CMAKE File"
+"FriendlyTypeName"="CMAKE File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cmake\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.cmake\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.diff]
+@="Patch File"
+"FriendlyTypeName"="Patch File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.diff\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.diff\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.patch]
+@="Patch File"
+"FriendlyTypeName"="Patch File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.patch\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.patch\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.bashrc]
+@="BASHRC File"
+"FriendlyTypeName"="BASHRC File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.bashrc\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.bashrc\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.zshrc]
+@="ZSHRC File"
+"FriendlyTypeName"="ZSHRC File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.zshrc\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.zshrc\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.profile]
+@="PROFILE File"
+"FriendlyTypeName"="PROFILE File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.profile\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.profile\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.inputrc]
+@="INPUTRC File"
+"FriendlyTypeName"="INPUTRC File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.inputrc\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.inputrc\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.md]
+@="Markdown Document"
+"FriendlyTypeName"="Markdown Document"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.md\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.md\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.markdown]
+@="Markdown Document"
+"FriendlyTypeName"="Markdown Document"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.markdown\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.markdown\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mdx]
+@="MDX Document"
+"FriendlyTypeName"="MDX Document"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mdx\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mdx\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mkd]
+@="Markdown Document"
+"FriendlyTypeName"="Markdown Document"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mkd\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.mkd\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.rst]
+@="RST File"
+"FriendlyTypeName"="RST File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.rst\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.rst\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.adoc]
+@="ADOC File"
+"FriendlyTypeName"="ADOC File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.adoc\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.adoc\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.asciidoc]
+@="ASCIIDOC File"
+"FriendlyTypeName"="ASCIIDOC File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.asciidoc\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.asciidoc\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.txt]
+@="Text Document"
+"FriendlyTypeName"="Text Document"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.txt\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.txt\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.log]
+@="Log File"
+"FriendlyTypeName"="Log File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.log\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.log\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.text]
+@="Text Document"
+"FriendlyTypeName"="Text Document"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.text\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.text\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.csv]
+@="CSV File"
+"FriendlyTypeName"="CSV File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.csv\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.csv\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.tsv]
+@="TSV File"
+"FriendlyTypeName"="TSV File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.tsv\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.tsv\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.nfo]
+@="NFO File"
+"FriendlyTypeName"="NFO File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.nfo\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.nfo\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.html]
+@="HTML Document"
+"FriendlyTypeName"="HTML Document"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.html\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.html\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.htm]
+@="HTML Document"
+"FriendlyTypeName"="HTML Document"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.htm\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.htm\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.xhtml]
+@="XHTML Document"
+"FriendlyTypeName"="XHTML Document"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.xhtml\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.xhtml\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.css]
+@="Stylesheet"
+"FriendlyTypeName"="Stylesheet"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.css\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.css\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.scss]
+@="Sass Stylesheet"
+"FriendlyTypeName"="Sass Stylesheet"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.scss\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.scss\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.sass]
+@="Sass Stylesheet"
+"FriendlyTypeName"="Sass Stylesheet"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.sass\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.sass\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.less]
+@="Less Stylesheet"
+"FriendlyTypeName"="Less Stylesheet"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.less\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.less\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.xml]
+@="XML Document"
+"FriendlyTypeName"="XML Document"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.xml\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.xml\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.svg]
+@="SVG Image"
+"FriendlyTypeName"="SVG Image"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.svg\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.svg\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.vue]
+@="VUE File"
+"FriendlyTypeName"="VUE File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.vue\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.vue\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.svelte]
+@="SVELTE File"
+"FriendlyTypeName"="SVELTE File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.svelte\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.svelte\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.astro]
+@="ASTRO File"
+"FriendlyTypeName"="ASTRO File"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.astro\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.astro\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.xsl]
+@="XSL Stylesheet"
+"FriendlyTypeName"="XSL Stylesheet"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.xsl\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.xsl\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.xslt]
+@="XSL Stylesheet"
+"FriendlyTypeName"="XSL Stylesheet"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.xslt\DefaultIcon]
+@="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Neovide.xslt\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+; --- 3. Point each extension at its ProgId + list it in Open-with ---
+[HKEY_CURRENT_USER\Software\Classes\.lua]
+@="Neovide.lua"
+
+[HKEY_CURRENT_USER\Software\Classes\.lua\OpenWithProgids]
+"Neovide.lua"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.py]
+@="Neovide.py"
+
+[HKEY_CURRENT_USER\Software\Classes\.py\OpenWithProgids]
+"Neovide.py"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.pyw]
+@="Neovide.pyw"
+
+[HKEY_CURRENT_USER\Software\Classes\.pyw\OpenWithProgids]
+"Neovide.pyw"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.pyi]
+@="Neovide.pyi"
+
+[HKEY_CURRENT_USER\Software\Classes\.pyi\OpenWithProgids]
+"Neovide.pyi"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.js]
+@="Neovide.js"
+
+[HKEY_CURRENT_USER\Software\Classes\.js\OpenWithProgids]
+"Neovide.js"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.mjs]
+@="Neovide.mjs"
+
+[HKEY_CURRENT_USER\Software\Classes\.mjs\OpenWithProgids]
+"Neovide.mjs"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.cjs]
+@="Neovide.cjs"
+
+[HKEY_CURRENT_USER\Software\Classes\.cjs\OpenWithProgids]
+"Neovide.cjs"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.ts]
+@="Neovide.ts"
+
+[HKEY_CURRENT_USER\Software\Classes\.ts\OpenWithProgids]
+"Neovide.ts"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.mts]
+@="Neovide.mts"
+
+[HKEY_CURRENT_USER\Software\Classes\.mts\OpenWithProgids]
+"Neovide.mts"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.cts]
+@="Neovide.cts"
+
+[HKEY_CURRENT_USER\Software\Classes\.cts\OpenWithProgids]
+"Neovide.cts"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.tsx]
+@="Neovide.tsx"
+
+[HKEY_CURRENT_USER\Software\Classes\.tsx\OpenWithProgids]
+"Neovide.tsx"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.jsx]
+@="Neovide.jsx"
+
+[HKEY_CURRENT_USER\Software\Classes\.jsx\OpenWithProgids]
+"Neovide.jsx"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.json]
+@="Neovide.json"
+
+[HKEY_CURRENT_USER\Software\Classes\.json\OpenWithProgids]
+"Neovide.json"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.jsonc]
+@="Neovide.jsonc"
+
+[HKEY_CURRENT_USER\Software\Classes\.jsonc\OpenWithProgids]
+"Neovide.jsonc"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.json5]
+@="Neovide.json5"
+
+[HKEY_CURRENT_USER\Software\Classes\.json5\OpenWithProgids]
+"Neovide.json5"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.toml]
+@="Neovide.toml"
+
+[HKEY_CURRENT_USER\Software\Classes\.toml\OpenWithProgids]
+"Neovide.toml"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.yml]
+@="Neovide.yml"
+
+[HKEY_CURRENT_USER\Software\Classes\.yml\OpenWithProgids]
+"Neovide.yml"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.yaml]
+@="Neovide.yaml"
+
+[HKEY_CURRENT_USER\Software\Classes\.yaml\OpenWithProgids]
+"Neovide.yaml"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.sh]
+@="Neovide.sh"
+
+[HKEY_CURRENT_USER\Software\Classes\.sh\OpenWithProgids]
+"Neovide.sh"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.bash]
+@="Neovide.bash"
+
+[HKEY_CURRENT_USER\Software\Classes\.bash\OpenWithProgids]
+"Neovide.bash"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.zsh]
+@="Neovide.zsh"
+
+[HKEY_CURRENT_USER\Software\Classes\.zsh\OpenWithProgids]
+"Neovide.zsh"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.fish]
+@="Neovide.fish"
+
+[HKEY_CURRENT_USER\Software\Classes\.fish\OpenWithProgids]
+"Neovide.fish"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.ps1]
+@="Neovide.ps1"
+
+[HKEY_CURRENT_USER\Software\Classes\.ps1\OpenWithProgids]
+"Neovide.ps1"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.psm1]
+@="Neovide.psm1"
+
+[HKEY_CURRENT_USER\Software\Classes\.psm1\OpenWithProgids]
+"Neovide.psm1"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.psd1]
+@="Neovide.psd1"
+
+[HKEY_CURRENT_USER\Software\Classes\.psd1\OpenWithProgids]
+"Neovide.psd1"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.c]
+@="Neovide.c"
+
+[HKEY_CURRENT_USER\Software\Classes\.c\OpenWithProgids]
+"Neovide.c"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.h]
+@="Neovide.h"
+
+[HKEY_CURRENT_USER\Software\Classes\.h\OpenWithProgids]
+"Neovide.h"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.cpp]
+@="Neovide.cpp"
+
+[HKEY_CURRENT_USER\Software\Classes\.cpp\OpenWithProgids]
+"Neovide.cpp"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.hpp]
+@="Neovide.hpp"
+
+[HKEY_CURRENT_USER\Software\Classes\.hpp\OpenWithProgids]
+"Neovide.hpp"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.cc]
+@="Neovide.cc"
+
+[HKEY_CURRENT_USER\Software\Classes\.cc\OpenWithProgids]
+"Neovide.cc"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.cxx]
+@="Neovide.cxx"
+
+[HKEY_CURRENT_USER\Software\Classes\.cxx\OpenWithProgids]
+"Neovide.cxx"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.hh]
+@="Neovide.hh"
+
+[HKEY_CURRENT_USER\Software\Classes\.hh\OpenWithProgids]
+"Neovide.hh"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.go]
+@="Neovide.go"
+
+[HKEY_CURRENT_USER\Software\Classes\.go\OpenWithProgids]
+"Neovide.go"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.rs]
+@="Neovide.rs"
+
+[HKEY_CURRENT_USER\Software\Classes\.rs\OpenWithProgids]
+"Neovide.rs"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.rb]
+@="Neovide.rb"
+
+[HKEY_CURRENT_USER\Software\Classes\.rb\OpenWithProgids]
+"Neovide.rb"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.php]
+@="Neovide.php"
+
+[HKEY_CURRENT_USER\Software\Classes\.php\OpenWithProgids]
+"Neovide.php"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.java]
+@="Neovide.java"
+
+[HKEY_CURRENT_USER\Software\Classes\.java\OpenWithProgids]
+"Neovide.java"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.kt]
+@="Neovide.kt"
+
+[HKEY_CURRENT_USER\Software\Classes\.kt\OpenWithProgids]
+"Neovide.kt"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.kts]
+@="Neovide.kts"
+
+[HKEY_CURRENT_USER\Software\Classes\.kts\OpenWithProgids]
+"Neovide.kts"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.cs]
+@="Neovide.cs"
+
+[HKEY_CURRENT_USER\Software\Classes\.cs\OpenWithProgids]
+"Neovide.cs"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.fs]
+@="Neovide.fs"
+
+[HKEY_CURRENT_USER\Software\Classes\.fs\OpenWithProgids]
+"Neovide.fs"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.sql]
+@="Neovide.sql"
+
+[HKEY_CURRENT_USER\Software\Classes\.sql\OpenWithProgids]
+"Neovide.sql"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.vim]
+@="Neovide.vim"
+
+[HKEY_CURRENT_USER\Software\Classes\.vim\OpenWithProgids]
+"Neovide.vim"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.ini]
+@="Neovide.ini"
+
+[HKEY_CURRENT_USER\Software\Classes\.ini\OpenWithProgids]
+"Neovide.ini"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.conf]
+@="Neovide.conf"
+
+[HKEY_CURRENT_USER\Software\Classes\.conf\OpenWithProgids]
+"Neovide.conf"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.cfg]
+@="Neovide.cfg"
+
+[HKEY_CURRENT_USER\Software\Classes\.cfg\OpenWithProgids]
+"Neovide.cfg"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.env]
+@="Neovide.env"
+
+[HKEY_CURRENT_USER\Software\Classes\.env\OpenWithProgids]
+"Neovide.env"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.properties]
+@="Neovide.properties"
+
+[HKEY_CURRENT_USER\Software\Classes\.properties\OpenWithProgids]
+"Neovide.properties"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.gitignore]
+@="Neovide.gitignore"
+
+[HKEY_CURRENT_USER\Software\Classes\.gitignore\OpenWithProgids]
+"Neovide.gitignore"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.gitattributes]
+@="Neovide.gitattributes"
+
+[HKEY_CURRENT_USER\Software\Classes\.gitattributes\OpenWithProgids]
+"Neovide.gitattributes"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.gitconfig]
+@="Neovide.gitconfig"
+
+[HKEY_CURRENT_USER\Software\Classes\.gitconfig\OpenWithProgids]
+"Neovide.gitconfig"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.gitmodules]
+@="Neovide.gitmodules"
+
+[HKEY_CURRENT_USER\Software\Classes\.gitmodules\OpenWithProgids]
+"Neovide.gitmodules"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.editorconfig]
+@="Neovide.editorconfig"
+
+[HKEY_CURRENT_USER\Software\Classes\.editorconfig\OpenWithProgids]
+"Neovide.editorconfig"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.dockerignore]
+@="Neovide.dockerignore"
+
+[HKEY_CURRENT_USER\Software\Classes\.dockerignore\OpenWithProgids]
+"Neovide.dockerignore"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.npmrc]
+@="Neovide.npmrc"
+
+[HKEY_CURRENT_USER\Software\Classes\.npmrc\OpenWithProgids]
+"Neovide.npmrc"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.nvmrc]
+@="Neovide.nvmrc"
+
+[HKEY_CURRENT_USER\Software\Classes\.nvmrc\OpenWithProgids]
+"Neovide.nvmrc"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.prettierrc]
+@="Neovide.prettierrc"
+
+[HKEY_CURRENT_USER\Software\Classes\.prettierrc\OpenWithProgids]
+"Neovide.prettierrc"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.eslintrc]
+@="Neovide.eslintrc"
+
+[HKEY_CURRENT_USER\Software\Classes\.eslintrc\OpenWithProgids]
+"Neovide.eslintrc"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.babelrc]
+@="Neovide.babelrc"
+
+[HKEY_CURRENT_USER\Software\Classes\.babelrc\OpenWithProgids]
+"Neovide.babelrc"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.r]
+@="Neovide.r"
+
+[HKEY_CURRENT_USER\Software\Classes\.r\OpenWithProgids]
+"Neovide.r"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.pl]
+@="Neovide.pl"
+
+[HKEY_CURRENT_USER\Software\Classes\.pl\OpenWithProgids]
+"Neovide.pl"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.pm]
+@="Neovide.pm"
+
+[HKEY_CURRENT_USER\Software\Classes\.pm\OpenWithProgids]
+"Neovide.pm"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.swift]
+@="Neovide.swift"
+
+[HKEY_CURRENT_USER\Software\Classes\.swift\OpenWithProgids]
+"Neovide.swift"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.scala]
+@="Neovide.scala"
+
+[HKEY_CURRENT_USER\Software\Classes\.scala\OpenWithProgids]
+"Neovide.scala"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.clj]
+@="Neovide.clj"
+
+[HKEY_CURRENT_USER\Software\Classes\.clj\OpenWithProgids]
+"Neovide.clj"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.cljs]
+@="Neovide.cljs"
+
+[HKEY_CURRENT_USER\Software\Classes\.cljs\OpenWithProgids]
+"Neovide.cljs"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.ex]
+@="Neovide.ex"
+
+[HKEY_CURRENT_USER\Software\Classes\.ex\OpenWithProgids]
+"Neovide.ex"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.exs]
+@="Neovide.exs"
+
+[HKEY_CURRENT_USER\Software\Classes\.exs\OpenWithProgids]
+"Neovide.exs"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.erl]
+@="Neovide.erl"
+
+[HKEY_CURRENT_USER\Software\Classes\.erl\OpenWithProgids]
+"Neovide.erl"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.hs]
+@="Neovide.hs"
+
+[HKEY_CURRENT_USER\Software\Classes\.hs\OpenWithProgids]
+"Neovide.hs"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.ml]
+@="Neovide.ml"
+
+[HKEY_CURRENT_USER\Software\Classes\.ml\OpenWithProgids]
+"Neovide.ml"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.zig]
+@="Neovide.zig"
+
+[HKEY_CURRENT_USER\Software\Classes\.zig\OpenWithProgids]
+"Neovide.zig"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.nim]
+@="Neovide.nim"
+
+[HKEY_CURRENT_USER\Software\Classes\.nim\OpenWithProgids]
+"Neovide.nim"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.dart]
+@="Neovide.dart"
+
+[HKEY_CURRENT_USER\Software\Classes\.dart\OpenWithProgids]
+"Neovide.dart"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.gradle]
+@="Neovide.gradle"
+
+[HKEY_CURRENT_USER\Software\Classes\.gradle\OpenWithProgids]
+"Neovide.gradle"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.tf]
+@="Neovide.tf"
+
+[HKEY_CURRENT_USER\Software\Classes\.tf\OpenWithProgids]
+"Neovide.tf"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.tfvars]
+@="Neovide.tfvars"
+
+[HKEY_CURRENT_USER\Software\Classes\.tfvars\OpenWithProgids]
+"Neovide.tfvars"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.nix]
+@="Neovide.nix"
+
+[HKEY_CURRENT_USER\Software\Classes\.nix\OpenWithProgids]
+"Neovide.nix"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.mk]
+@="Neovide.mk"
+
+[HKEY_CURRENT_USER\Software\Classes\.mk\OpenWithProgids]
+"Neovide.mk"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.cmake]
+@="Neovide.cmake"
+
+[HKEY_CURRENT_USER\Software\Classes\.cmake\OpenWithProgids]
+"Neovide.cmake"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.diff]
+@="Neovide.diff"
+
+[HKEY_CURRENT_USER\Software\Classes\.diff\OpenWithProgids]
+"Neovide.diff"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.patch]
+@="Neovide.patch"
+
+[HKEY_CURRENT_USER\Software\Classes\.patch\OpenWithProgids]
+"Neovide.patch"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.bashrc]
+@="Neovide.bashrc"
+
+[HKEY_CURRENT_USER\Software\Classes\.bashrc\OpenWithProgids]
+"Neovide.bashrc"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.zshrc]
+@="Neovide.zshrc"
+
+[HKEY_CURRENT_USER\Software\Classes\.zshrc\OpenWithProgids]
+"Neovide.zshrc"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.profile]
+@="Neovide.profile"
+
+[HKEY_CURRENT_USER\Software\Classes\.profile\OpenWithProgids]
+"Neovide.profile"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.inputrc]
+@="Neovide.inputrc"
+
+[HKEY_CURRENT_USER\Software\Classes\.inputrc\OpenWithProgids]
+"Neovide.inputrc"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.md]
+@="Neovide.md"
+
+[HKEY_CURRENT_USER\Software\Classes\.md\OpenWithProgids]
+"Neovide.md"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.markdown]
+@="Neovide.markdown"
+
+[HKEY_CURRENT_USER\Software\Classes\.markdown\OpenWithProgids]
+"Neovide.markdown"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.mdx]
+@="Neovide.mdx"
+
+[HKEY_CURRENT_USER\Software\Classes\.mdx\OpenWithProgids]
+"Neovide.mdx"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.mkd]
+@="Neovide.mkd"
+
+[HKEY_CURRENT_USER\Software\Classes\.mkd\OpenWithProgids]
+"Neovide.mkd"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.rst]
+@="Neovide.rst"
+
+[HKEY_CURRENT_USER\Software\Classes\.rst\OpenWithProgids]
+"Neovide.rst"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.adoc]
+@="Neovide.adoc"
+
+[HKEY_CURRENT_USER\Software\Classes\.adoc\OpenWithProgids]
+"Neovide.adoc"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.asciidoc]
+@="Neovide.asciidoc"
+
+[HKEY_CURRENT_USER\Software\Classes\.asciidoc\OpenWithProgids]
+"Neovide.asciidoc"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.txt]
+@="Neovide.txt"
+
+[HKEY_CURRENT_USER\Software\Classes\.txt\OpenWithProgids]
+"Neovide.txt"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.log]
+@="Neovide.log"
+
+[HKEY_CURRENT_USER\Software\Classes\.log\OpenWithProgids]
+"Neovide.log"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.text]
+@="Neovide.text"
+
+[HKEY_CURRENT_USER\Software\Classes\.text\OpenWithProgids]
+"Neovide.text"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.csv]
+@="Neovide.csv"
+
+[HKEY_CURRENT_USER\Software\Classes\.csv\OpenWithProgids]
+"Neovide.csv"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.tsv]
+@="Neovide.tsv"
+
+[HKEY_CURRENT_USER\Software\Classes\.tsv\OpenWithProgids]
+"Neovide.tsv"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.nfo]
+@="Neovide.nfo"
+
+[HKEY_CURRENT_USER\Software\Classes\.nfo\OpenWithProgids]
+"Neovide.nfo"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.html]
+@="Neovide.html"
+
+[HKEY_CURRENT_USER\Software\Classes\.html\OpenWithProgids]
+"Neovide.html"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.htm]
+@="Neovide.htm"
+
+[HKEY_CURRENT_USER\Software\Classes\.htm\OpenWithProgids]
+"Neovide.htm"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.xhtml]
+@="Neovide.xhtml"
+
+[HKEY_CURRENT_USER\Software\Classes\.xhtml\OpenWithProgids]
+"Neovide.xhtml"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.css]
+@="Neovide.css"
+
+[HKEY_CURRENT_USER\Software\Classes\.css\OpenWithProgids]
+"Neovide.css"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.scss]
+@="Neovide.scss"
+
+[HKEY_CURRENT_USER\Software\Classes\.scss\OpenWithProgids]
+"Neovide.scss"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.sass]
+@="Neovide.sass"
+
+[HKEY_CURRENT_USER\Software\Classes\.sass\OpenWithProgids]
+"Neovide.sass"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.less]
+@="Neovide.less"
+
+[HKEY_CURRENT_USER\Software\Classes\.less\OpenWithProgids]
+"Neovide.less"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.xml]
+@="Neovide.xml"
+
+[HKEY_CURRENT_USER\Software\Classes\.xml\OpenWithProgids]
+"Neovide.xml"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.svg]
+@="Neovide.svg"
+
+[HKEY_CURRENT_USER\Software\Classes\.svg\OpenWithProgids]
+"Neovide.svg"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.vue]
+@="Neovide.vue"
+
+[HKEY_CURRENT_USER\Software\Classes\.vue\OpenWithProgids]
+"Neovide.vue"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.svelte]
+@="Neovide.svelte"
+
+[HKEY_CURRENT_USER\Software\Classes\.svelte\OpenWithProgids]
+"Neovide.svelte"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.astro]
+@="Neovide.astro"
+
+[HKEY_CURRENT_USER\Software\Classes\.astro\OpenWithProgids]
+"Neovide.astro"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.xsl]
+@="Neovide.xsl"
+
+[HKEY_CURRENT_USER\Software\Classes\.xsl\OpenWithProgids]
+"Neovide.xsl"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.xslt]
+@="Neovide.xslt"
+
+[HKEY_CURRENT_USER\Software\Classes\.xslt\OpenWithProgids]
+"Neovide.xslt"=""
+
+; --- 4. Clear the hash-protected UserChoice where one already exists ---
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.html\UserChoice]
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.html\UserChoiceLatest]
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.htm\UserChoice]
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.htm\UserChoiceLatest]
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.svg\UserChoice]
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.svg\UserChoiceLatest]
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.xml\UserChoice]
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.xml\UserChoiceLatest]
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.txt\UserChoice]
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.txt\UserChoiceLatest]
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.log\UserChoice]
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.log\UserChoiceLatest]
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.ps1\UserChoice]
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.ps1\UserChoiceLatest]
+
+; --- 5. Unknown / extensionless files (Dockerfile, Makefile, LICENSE) ---
+[HKEY_CURRENT_USER\Software\Classes\Unknown\shell]
+@="open"
+
+[HKEY_CURRENT_USER\Software\Classes\Unknown\shell\open]
+@="Open with Neovide"
+"Icon"="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\Unknown\shell\open\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+; --- 6. Right-click "Open with Neovide" on every file ---
+[HKEY_CURRENT_USER\Software\Classes\*\shell\NeovideOpen]
+@="Open with Neovide"
+"Icon"="C:\\Program Files\\Neovide\\neovide.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\NeovideOpen\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+; --- 7. Register in Settings > Default apps ---
+[HKEY_CURRENT_USER\Software\Neovide\Capabilities]
+"ApplicationName"="Neovide"
+"ApplicationDescription"="No Nonsense Neovim GUI"
+
+[HKEY_CURRENT_USER\Software\Neovide\Capabilities\FileAssociations]
+".lua"="Neovide.lua"
+".py"="Neovide.py"
+".pyw"="Neovide.pyw"
+".pyi"="Neovide.pyi"
+".js"="Neovide.js"
+".mjs"="Neovide.mjs"
+".cjs"="Neovide.cjs"
+".ts"="Neovide.ts"
+".mts"="Neovide.mts"
+".cts"="Neovide.cts"
+".tsx"="Neovide.tsx"
+".jsx"="Neovide.jsx"
+".json"="Neovide.json"
+".jsonc"="Neovide.jsonc"
+".json5"="Neovide.json5"
+".toml"="Neovide.toml"
+".yml"="Neovide.yml"
+".yaml"="Neovide.yaml"
+".sh"="Neovide.sh"
+".bash"="Neovide.bash"
+".zsh"="Neovide.zsh"
+".fish"="Neovide.fish"
+".ps1"="Neovide.ps1"
+".psm1"="Neovide.psm1"
+".psd1"="Neovide.psd1"
+".c"="Neovide.c"
+".h"="Neovide.h"
+".cpp"="Neovide.cpp"
+".hpp"="Neovide.hpp"
+".cc"="Neovide.cc"
+".cxx"="Neovide.cxx"
+".hh"="Neovide.hh"
+".go"="Neovide.go"
+".rs"="Neovide.rs"
+".rb"="Neovide.rb"
+".php"="Neovide.php"
+".java"="Neovide.java"
+".kt"="Neovide.kt"
+".kts"="Neovide.kts"
+".cs"="Neovide.cs"
+".fs"="Neovide.fs"
+".sql"="Neovide.sql"
+".vim"="Neovide.vim"
+".ini"="Neovide.ini"
+".conf"="Neovide.conf"
+".cfg"="Neovide.cfg"
+".env"="Neovide.env"
+".properties"="Neovide.properties"
+".gitignore"="Neovide.gitignore"
+".gitattributes"="Neovide.gitattributes"
+".gitconfig"="Neovide.gitconfig"
+".gitmodules"="Neovide.gitmodules"
+".editorconfig"="Neovide.editorconfig"
+".dockerignore"="Neovide.dockerignore"
+".npmrc"="Neovide.npmrc"
+".nvmrc"="Neovide.nvmrc"
+".prettierrc"="Neovide.prettierrc"
+".eslintrc"="Neovide.eslintrc"
+".babelrc"="Neovide.babelrc"
+".r"="Neovide.r"
+".pl"="Neovide.pl"
+".pm"="Neovide.pm"
+".swift"="Neovide.swift"
+".scala"="Neovide.scala"
+".clj"="Neovide.clj"
+".cljs"="Neovide.cljs"
+".ex"="Neovide.ex"
+".exs"="Neovide.exs"
+".erl"="Neovide.erl"
+".hs"="Neovide.hs"
+".ml"="Neovide.ml"
+".zig"="Neovide.zig"
+".nim"="Neovide.nim"
+".dart"="Neovide.dart"
+".gradle"="Neovide.gradle"
+".tf"="Neovide.tf"
+".tfvars"="Neovide.tfvars"
+".nix"="Neovide.nix"
+".mk"="Neovide.mk"
+".cmake"="Neovide.cmake"
+".diff"="Neovide.diff"
+".patch"="Neovide.patch"
+".bashrc"="Neovide.bashrc"
+".zshrc"="Neovide.zshrc"
+".profile"="Neovide.profile"
+".inputrc"="Neovide.inputrc"
+".md"="Neovide.md"
+".markdown"="Neovide.markdown"
+".mdx"="Neovide.mdx"
+".mkd"="Neovide.mkd"
+".rst"="Neovide.rst"
+".adoc"="Neovide.adoc"
+".asciidoc"="Neovide.asciidoc"
+".txt"="Neovide.txt"
+".log"="Neovide.log"
+".text"="Neovide.text"
+".csv"="Neovide.csv"
+".tsv"="Neovide.tsv"
+".nfo"="Neovide.nfo"
+".html"="Neovide.html"
+".htm"="Neovide.htm"
+".xhtml"="Neovide.xhtml"
+".css"="Neovide.css"
+".scss"="Neovide.scss"
+".sass"="Neovide.sass"
+".less"="Neovide.less"
+".xml"="Neovide.xml"
+".svg"="Neovide.svg"
+".vue"="Neovide.vue"
+".svelte"="Neovide.svelte"
+".astro"="Neovide.astro"
+".xsl"="Neovide.xsl"
+".xslt"="Neovide.xslt"
+
+[HKEY_CURRENT_USER\Software\RegisteredApplications]
+"Neovide"="Software\\Neovide\\Capabilities"
+

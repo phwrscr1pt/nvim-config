@@ -22,9 +22,10 @@ Quick reference for all keyboard shortcuts in this Neovim configuration.
 
 ## System Clipboard
 
-The `"+` register talks to your OS clipboard. On Linux this needs a provider
-installed — **xclip** or **xsel** (X11), or **wl-clipboard** (Wayland). Without
-one these do nothing; `:checkhealth provider` will tell you.
+The `"+` register talks to your OS clipboard. **On macOS and Windows this works
+with nothing installed** (macOS uses the built-in `pbcopy`/`pbpaste`). On Linux it
+needs a provider — **xclip** or **xsel** (X11), or **wl-clipboard** (Wayland);
+without one these do nothing. Check with `:checkhealth vim.provider`.
 
 | Keybinding | Mode | Action |
 |------------|------|--------|
@@ -68,7 +69,6 @@ Inside nvim-tree:
 | `<Space>f` | Normal | Find files (git-aware: git files in a repo, else all files) |
 | `<C-p>` | Normal | Find files (always all files) |
 | `<Space>ps` | Normal | Live grep (search text across files — needs ripgrep) |
-| `<Space>pp` | Normal | Recent projects picker (project.nvim) |
 
 Inside Telescope:
 - `<C-n>` / `<C-p>` - Navigate results
@@ -89,6 +89,14 @@ Inside the Grapple menu:
 - `<CR>` - Open selected file
 - `j` / `k` - Navigate
 - edit lines to reorder/remove, then `:w`
+
+## Projects (project.nvim)
+
+| Keybinding | Mode | Action |
+|------------|------|--------|
+| `<Space>pp` | Normal | Open the recent-projects picker |
+
+Opening a file auto-`cd`s to its project root (detected by `.git`, `package.json`, `go.mod`, `pyproject.toml`, `Makefile`, etc.), so `<Space>f`, `:terminal`, and grep all follow the project.
 
 ## Jump Motion (flash.nvim)
 
@@ -128,9 +136,14 @@ Structure-aware selections and motions (need the parser for that language).
 |------------|------|--------|
 | `<A-w>` | Normal/Terminal | Toggle horizontal terminal |
 | `<A-q>` | Normal/Terminal | Toggle floating terminal |
+| `<C-\>` | Normal | Toggle floating terminal (alias; works when `<A-*>` does not) |
 
-On Linux the terminal uses your `$SHELL` (zsh on Kali). Inside the terminal,
-press the same key to toggle it off, or type `exit`.
+On Linux and macOS the terminal uses your `$SHELL` (zsh is the default on both
+Kali and macOS); on Windows it prefers `pwsh` and falls back to `powershell`.
+Inside the terminal, press the same key to toggle it off, or type `exit`.
+
+Inside any terminal buffer, `<C-\><C-n>` leaves terminal mode. `<C-\>` alone is
+mapped in **normal** mode only, precisely so that keeps working.
 
 ## Git Hunks (gitsigns)
 
@@ -181,6 +194,16 @@ Replaces nvim-cmp. Uses the "enter" preset.
 | `<CR>` | Insert | Accept selected item |
 | `<C-e>` | Insert | Cancel / close the menu |
 
+## Comments
+
+Native Neovim commenting (built in, no plugin).
+
+| Keybinding | Mode | Action |
+|------------|------|--------|
+| `gc{motion}` | Normal | Toggle comment over a motion |
+| `gcc` | Normal | Toggle comment on the current line |
+| `gc` | Visual | Toggle comment on the selection |
+
 ## AI (Claude Code)
 
 Requires the `claude` CLI on your PATH.
@@ -201,13 +224,28 @@ Requires the `claude` CLI on your PATH.
 | `<Space>oc` | Normal | Stop the browser preview |
 | `<Space>or` | Normal | Toggle in-buffer markdown rendering |
 
-## Tips for Kali Linux
+## Tips
 
 1. **Quick Python scripting**: `<C-p>` to open a file, LSP provides autocomplete.
 2. **Search in project**: `<Space>ps` to grep across all files.
 3. **Terminal workflow**: `<A-q>` for a floating terminal to run scripts.
 4. **Fast file switching**: tag your working files with `<Space>m`, jump via `<Space>M`.
 5. **Jump anywhere on screen**: `s` + target characters + label (flash).
+6. **Text objects beat motions**: `ciw`, `ci"`, `vif` change far more per keystroke
+   than `w`/`b` ever will - see [VIM_TEXT_OBJECTS.md](VIM_TEXT_OBJECTS.md).
+
+### Platform notes
+
+| | Linux | macOS | Windows |
+|---|---|---|---|
+| Clipboard `<Space>y` / `<Space>P` | needs xclip / xsel / wl-clipboard | works out of the box (pbcopy) | works out of the box |
+| Terminal shell (`<A-w>` / `<A-q>`) | your `$SHELL` | your `$SHELL` (zsh) | pwsh, else powershell |
+| `<A-*>` keys | work | **need Option-as-Meta**, and do not fire at all while a Thai input source is active - use `<C-\>` for the float terminal | work |
+| `<C-Space>` completion trigger | works | claimed by the OS for input-source switching | arrives as `<Nul>`, which is mapped |
+
+**Cmd is not available to terminal Neovim on macOS.** Cmd-C / Cmd-V / Cmd-S are
+handled by the terminal app and never reach Neovim; the equivalents here are
+`<Space>y` / `<Space>P` and `<C-s>`.
 
 ## Practice Exercises
 
@@ -253,12 +291,13 @@ Requires the `claude` CLI on your PATH.
 | Symbol | Key |
 |--------|-----|
 | `<C-x>` | Ctrl + x |
-| `<A-x>` | Alt + x |
+| `<A-x>` | Alt + x (macOS: Option/Cmd-less ⌥ — needs Option-as-Meta, see your install guide) |
 | `<S-x>` | Shift + x |
 | `<Space>` | Space bar (Leader) |
 | `<CR>` | Enter |
 | `<Esc>` | Escape |
 | `Op` | Operator-pending (after `d`, `y`, `c`, `v`…) |
+| Cmd / ⌘ | **Not available to terminal Neovim.** The terminal app handles ⌘C/⌘V/⌘S; use `<Space>y` / `<Space>P` / `<C-s>` |
 
 ---
 

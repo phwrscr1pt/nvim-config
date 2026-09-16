@@ -6,8 +6,10 @@ require("blink.cmp").setup({
   -- 'enter' preset: <CR> accepts the selection, <C-n>/<C-p> (or Up/Down) select,
   -- <C-Space> opens the menu, <C-e> cancels -- close to the old nvim-cmp keys.
   -- Terminals (incl. Windows Terminal) deliver Ctrl+Space to Neovim as <Nul>
-  -- (^@), so blink's preset <C-space> never fires. Map <Nul> to "show" too, so
-  -- the manual Ctrl+Space trigger works in the terminal.
+  -- (^@), so blink's preset <C-space> never fires. Map <Nul> to "show" too.
+  -- macOS CAVEAT: the OS claims Ctrl+Space for "Select the previous input
+  -- source", so NEITHER key reaches Neovim there once a second input source
+  -- exists. Completion still auto-shows; only the manual trigger is gone.
   keymap = {
     preset = "enter",
     ["<Nul>"] = { "show", "show_documentation", "hide_documentation" },

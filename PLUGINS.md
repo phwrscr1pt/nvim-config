@@ -163,13 +163,15 @@ one-key label to teleport. Also enhances `f`/`F`/`t`/`T` across lines.
 ## Terminal Plugin
 
 ### toggleterm.nvim
-**What:** Terminal emulator inside Neovim. On Linux it uses your `$SHELL` (zsh on
-Kali).
+**What:** Terminal emulator inside Neovim. On Linux and macOS it uses your
+`$SHELL` (zsh is the default on both Kali and macOS); on Windows it prefers
+`pwsh` and falls back to `powershell`.
 
 | Key | Mode | Action |
 |-----|------|--------|
 | `<A-q>` | Normal/Terminal | Toggle floating terminal |
 | `<A-w>` | Normal/Terminal | Toggle horizontal terminal |
+| `<C-\>` | Normal | Toggle floating terminal (alias) |
 
 Terminal state is preserved when hidden.
 
@@ -261,10 +263,12 @@ toolchain needed).
 ### nvim-treesitter (main branch) + textobjects
 **What:** Real syntax highlighting and indentation, and structure-aware text
 objects. The **main** branch compiles parsers locally, so it needs the
-**tree-sitter CLI + a C compiler** (see INSTALL.md).
+**tree-sitter CLI + a C compiler** (see your platform's install guide).
 
 > **Requires Neovim 0.12+.** The main branch calls 0.12-only APIs; on 0.11 it
-> errors on load. This is why the setup uses a nightly Neovim (see INSTALL.md).
+> errors on load. Note the config's own gate only checks for 0.11, so a 0.11
+> machine loads the config and then fails here. Install a 0.12 build per
+> [SETUP.md](SETUP.md) and your platform's install guide.
 
 Parsers kept installed: lua, vim, vimdoc, query, python, bash, go, c, cpp, rust,
 markdown, markdown_inline, json, yaml, toml.
@@ -398,7 +402,7 @@ gsa " gsd " gsr "'   add/delete/replace
 
 ---
 
-## Tips for Security Work on Kali
+## Tips for Security Work
 
 1. **Python scripting:** LSP gives autocomplete for Python libraries.
 2. **Quick terminal:** `<A-q>` to run exploit scripts.

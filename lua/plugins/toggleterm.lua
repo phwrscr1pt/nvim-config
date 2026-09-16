@@ -1,5 +1,5 @@
 -- Linux/macOS: `shell` stays nil, so toggleterm uses Neovim's 'shell', i.e. your
--- $SHELL -- zsh on Kali. Nothing to configure.
+-- $SHELL -- zsh on both Kali and macOS. Nothing to configure.
 -- The win32 branch below exists only so this same file still works on Windows,
 -- where Neovim's default shell is cmd.exe; there it prefers PowerShell 7 (pwsh)
 -- and falls back to Windows PowerShell.

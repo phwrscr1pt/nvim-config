@@ -1,0 +1,31 @@
+# ---------------------------------------------------------------------------
+# HARD GUARD (Q4). This repo is PUBLIC. These filenames carry homelab infra
+# detail and must never be committed here, not even by an accidental `git add .`.
+# They live only in the PRIVATE archive repo.
+# ---------------------------------------------------------------------------
+WIN_DESKTOP_TH.md
+SESSION_RESUME.md
+THAI_INPUT_DEBUG.md
+edit.txt
+
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Editor / swap junk
+*.swp
+*~
+
+# Neovim runtime noise sometimes written into the cwd
+nvim.log
+lsp.log
+
+# NOTE: lazy-lock.json is intentionally NOT ignored -- it is committed so plugin
+# versions are reproducible across Windows / macOS / Kali.

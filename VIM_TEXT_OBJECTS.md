@@ -337,11 +337,26 @@ Text objects select regions for operators, but **motions** move your cursor. Her
 | `E` | End of WORD |
 
 ```
-   hello_world  foo  bar
-   ^    ^    ^  ^    ^
-   w    e    w  w    w    (forward)
-   b    b    b  b         (backward)
+   hello-world  foo  bar
+   ^    ^^      ^    ^
+   1    23      4    5
+
+   w  from the start:  1 -> 2 -> 3 -> 4 -> 5   (hello | - | world | foo | bar)
+   b  from the end:    5 -> 4 -> 3 -> 2 -> 1
+   e  lands on the LAST character of each word: o, -, d, o, r
 ```
+
+Punctuation is its own word, which is why `hello-world` is three of them. An
+**underscore is not** — it is a keyword character, so:
+
+```
+   hello_world  foo  bar
+   ^            ^    ^
+   1            2    3        <- w stops here; hello_world is ONE word
+```
+
+From the `h`, `e` lands on the final `d`, and `w` jumps straight past to `foo`.
+Use `W`/`B`/`E` to treat `hello-world` as one unit too (whitespace-separated).
 
 ### Find on Current Line
 

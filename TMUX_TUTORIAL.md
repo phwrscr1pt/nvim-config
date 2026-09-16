@@ -14,8 +14,15 @@ Tmux (Terminal Multiplexer) - Run multiple terminals in one window, keep session
 ## Installation
 
 ```bash
+# Linux (Debian/Kali)
 sudo apt install tmux
+# macOS
+brew install tmux
 ```
+
+> **Windows:** there is no native tmux. Use Windows Terminal's own splits, or
+> `<A-w>` / `<A-q>` (toggleterm) inside Neovim. This tutorial applies to the
+> Linux and macOS machines.
 
 ## Basic Concepts
 
@@ -255,6 +262,8 @@ nvim ~/.tmux.conf
 
 ```bash
 # Change prefix to Ctrl+a (easier to reach)
+# NOT used in this setup - the shipped tmux.conf keeps the default C-b so muscle
+# memory matches the Kali box. See Tip 3 at the bottom. Skip these three lines.
 unbind C-b
 set -g prefix C-a
 bind C-a send-prefix
@@ -282,6 +291,10 @@ bind -n M-Up select-pane -U
 bind -n M-Down select-pane -D
 
 # Better colors
+# NOTE: the shipped tmux.conf uses "tmux-256color" plus
+#   set -as terminal-features ",*:RGB"
+# instead. screen-256color advertises no RGB capability, so it silently kills
+# truecolor - the Neovim onedark colorscheme and undercurl both need it.
 set -g default-terminal "screen-256color"
 
 # Status bar
@@ -369,7 +382,10 @@ python script.py
 
 1. **Always name sessions** - `tmux new -s name` instead of just `tmux`
 2. **Use mouse mode** - Add `set -g mouse on` to config
-3. **Change prefix** - `Ctrl+a` is easier than `Ctrl+b`
+3. **Change prefix** - `Ctrl+a` is easier to reach than `Ctrl+b`. **This setup
+   deliberately does not**: the Kali box has always used the default `C-b`, and
+   keeping every machine identical is worth more than the easier reach. The
+   shipped `tmux.conf` therefore omits the prefix lines below.
 4. **Zoom for focus** - `<prefix> z` to fullscreen a pane
 5. **Sync panes** - Great for multi-server commands
 

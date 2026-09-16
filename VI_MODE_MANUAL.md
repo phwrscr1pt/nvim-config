@@ -2,6 +2,9 @@
 
 Enable vi keybindings in your shell, readline programs, and tmux for a consistent Vim-like experience everywhere.
 
+Covers Linux and macOS. Windows is not covered here: PowerShell's equivalent is
+PSReadLine — `Set-PSReadLineOption -EditMode Vi`.
+
 ---
 
 ## 1. Vi Mode in Shell
@@ -20,7 +23,7 @@ Reload:
 source ~/.bashrc
 ```
 
-### For Zsh (Kali Linux default)
+### For Zsh (the default on both macOS and Kali)
 
 Add to `~/.zshrc`:
 
@@ -47,9 +50,13 @@ echo $SHELL
 
 ---
 
-## 2. Vi Mode for GNU Readline
+## 2. Vi Mode for GNU Readline (and libedit on macOS)
 
 Enables vi keybindings in programs that use readline (Python REPL, MySQL, Node.js, etc.)
+
+> **macOS:** Apple ships **libedit** rather than GNU readline for its base tools.
+> libedit reads `~/.editrc`, not `~/.inputrc`, and wants `bind -v` rather than
+> `set editing-mode vi`. Add both — see section 5.
 
 ### Basic Setup
 
@@ -172,11 +179,25 @@ Remove `set editing-mode vi` from `~/.inputrc`
 
 ## 5. Quick Setup Commands
 
-### One-liner for Zsh + Readline (Kali Linux)
+### One-liner for Zsh + Readline (Linux)
 
 ```bash
 echo "bindkey -v" >> ~/.zshrc && echo "set editing-mode vi" >> ~/.inputrc && source ~/.zshrc
 ```
+
+### One-liner for Zsh + libedit (macOS)
+
+macOS ships **libedit**, not GNU readline, for the Python REPL, `sqlite3` and
+other base tools. libedit reads `~/.editrc` and ignores `~/.inputrc` entirely, so
+you need both files:
+
+```bash
+echo "bindkey -v" >> ~/.zshrc && echo "bind -v" >> ~/.editrc && source ~/.zshrc
+```
+
+Homebrew builds that link real readline **do** honour `~/.inputrc`, which is why
+this failure looks random: `python3` from Homebrew may obey it while
+`/usr/bin/python3` does not. Writing both files covers either case.
 
 ### One-liner for Bash + Readline
 

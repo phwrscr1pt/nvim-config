@@ -16,7 +16,7 @@
 - 5. Plugins: เขียนโค้ด (LSP, Completion, Treesitter)
 - 6. Plugins: Git, Terminal และ Workflow จริง
 - 7. เส้นทางสู่ Vim Expert + Cheatsheet
-- 8. แก้ปัญหาที่พบบ่อย + เคล็ดลับ Windows
+- 8. แก้ปัญหาที่พบบ่อย + เคล็ดลับเฉพาะเครื่อง
 - 9. ใช้ AI CLI ใน Neovim (Claude Code + codex)
 
 ---
@@ -27,7 +27,7 @@
 
 ### 1.1 config ตัวนี้คืออะไร
 
-สิ่งที่คุณกำลังใช้อยู่คือ **Neovim v0.12.4 บน Windows** ที่ถูกจัดชุดมาให้เป็นสาย "โมเดิร์นปี 2026" เต็มตัว หมายความว่าเราไม่ได้ใช้ปลั๊กอินเก่าๆ ที่คนเลิกใช้กันแล้ว แต่เลือกของที่เป็นมาตรฐานใหม่ล่าสุด เช่น:
+สิ่งที่คุณกำลังใช้อยู่คือ **Neovim 0.12+** ที่ถูกจัดชุดมาให้เป็นสาย "โมเดิร์นปี 2026" เต็มตัว config ชุดนี้เป็นชุดเดียวกันหมดทั้ง Windows, macOS และ Linux (ขั้นต่ำจริง ๆ คือ 0.11 เพราะใช้ `vim.lsp.config`/`vim.lsp.enable` แต่แนะนำ 0.12 เพราะ nvim-treesitter branch `main` ต้องใช้) หมายความว่าเราไม่ได้ใช้ปลั๊กอินเก่าๆ ที่คนเลิกใช้กันแล้ว แต่เลือกของที่เป็นมาตรฐานใหม่ล่าสุด เช่น:
 
 - ใช้ **lazy.nvim** เป็นตัวจัดการปลั๊กอิน (ตัวที่วงการ Neovim ยอมรับเป็นมาตรฐานตอนนี้) และตั้งค่าให้ปลั๊กอินส่วนใหญ่ **lazy-load** คือโหลดตอนต้องใช้จริงเท่านั้น ทำให้เปิด Neovim ได้เร็วมาก
 - ใช้ **LSP แบบ native** ของ Neovim เอง (ผ่าน `vim.lsp`) ไม่พึ่งตัวห่ออย่าง lsp-zero อีกต่อไป — นี่คือทิศทางที่ Neovim อยากให้เราไปในระยะยาว
@@ -92,7 +92,7 @@ V      = Visual line       เลือกทีละบรรทัด (ตั
 
 **Command mode** — กด `:` เพื่อพิมพ์คำสั่งที่แถบล่างสุดของจอ เช่น `:w` (save), `:q` (quit), `:wq` (save แล้ว quit) พิมพ์เสร็จกด `<CR>` (Enter) เพื่อรัน ถ้าเปลี่ยนใจกด `<Esc>` ยกเลิกได้ คำสั่งที่ขึ้นต้นด้วยตัวพิมพ์ใหญ่ก็เรียกจากที่นี่ เช่น `:Mason`, `:LazyGit`, `:VimBeGood`
 
-**Terminal mode** — config นี้มีเทอร์มินัล (PowerShell) ฝังในตัว เปิดด้วย `<A-w>` (แบบแบ่งครึ่งจอ) หรือ `<A-q>` (แบบลอย) ข้อควรระวัง: พอเข้าไปในเทอร์มินัลแล้ว การพิมพ์จะถูกส่งเข้าเทอร์มินัลหมด ถ้าอยากออกมาคุม Neovim ตามปกติให้กด `<C-\><C-n>` (Ctrl+Backslash แล้วตามด้วย Ctrl+n) — จำชุดนี้ไว้ ไม่งั้นจะรู้สึกเหมือนติดอยู่ในเทอร์มินัล
+**Terminal mode** — config นี้มีเทอร์มินัลฝังในตัว (บน macOS/Linux คือ `$SHELL` ของคุณ ปกติคือ zsh ส่วนบน Windows เป็น PowerShell) เปิดด้วย `<A-w>` (แบบแบ่งครึ่งจอ) หรือ `<A-q>` (แบบลอย) ข้อควรระวัง: พอเข้าไปในเทอร์มินัลแล้ว การพิมพ์จะถูกส่งเข้าเทอร์มินัลหมด ถ้าอยากออกมาคุม Neovim ตามปกติให้กด `<C-\><C-n>` (Ctrl+Backslash แล้วตามด้วย Ctrl+n) — จำชุดนี้ไว้ ไม่งั้นจะรู้สึกเหมือนติดอยู่ในเทอร์มินัล
 
 ### 1.4 which-key: ครูสอนที่ดีที่สุดของคุณ
 
@@ -835,7 +835,7 @@ blink.cmp ดึงข้อมูลมาจากหลายแหล่ง�
 
 > ตัวอย่างจริง: เปิดไฟล์ `.py` พิมพ์ `import o` เมนูจะเด้งเสนอ `os`, `operator` ฯลฯ กด `<C-n>` เลื่อนไปที่ `os` แล้วกด `<CR>` — ได้ `import os` ทันที หรือพิมพ์ชื่อ object แล้วตามด้วยจุด เช่น `os.` blink จะโชว์ method/attribute ทั้งหมดของ `os` ให้เลือก
 
-> เกร็ด `<C-Space>`: บน Windows Terminal ปุ่มนี้บางทีระบบส่งมาเป็นสัญญาณพิเศษ (`<Nul>`) config เลย map `<Nul>` ให้เรียกเมนูด้วย ดังนั้นถ้ากด `Ctrl+Space` แล้วเมนูไม่ขึ้น ไม่ใช่ config พังนะครับ มันถูกดักไว้ให้ทำงานได้แล้ว
+> เกร็ด `<C-Space>`: terminal หลายตัว (Windows Terminal, iTerm2, Terminal.app) ส่งปุ่มนี้มาเป็นสัญญาณพิเศษ (`<Nul>`) config เลย map `<Nul>` ให้เรียกเมนูด้วย ดังนั้นถ้ากด `Ctrl+Space` แล้วเมนูไม่ขึ้น ไม่ใช่ config พังนะครับ มันถูกดักไว้ให้ทำงานได้แล้ว — **ยกเว้นบน macOS** ที่ระบบยึดปุ่มนี้ไปสลับภาษา ทำให้ไม่มีทางถึง Neovim เลย (ดูหัวข้อ 8.3)
 
 ---
 
@@ -1102,7 +1102,7 @@ q             -> ออกจาก lazygit กลับสู่ Neovim
 
 ### 6.3 toggleterm — เทอร์มินัลในตัว ไม่ต้องสลับหน้าต่าง
 
-หลายครั้งเราต้องรันคำสั่งระหว่างเขียนโค้ด เช่น `python a.py`, `npm test`, `git status` การสลับไปหน้าต่าง terminal อื่นแล้วกลับมาทำให้เสียจังหวะ toggleterm เปิดเทอร์มินัลซ้อนใน Neovim ให้เลย และบน Windows config นี้ตั้งค่าให้ใช้ **PowerShell** (pwsh ถ้ามี ไม่งั้น powershell) ให้อัตโนมัติ
+หลายครั้งเราต้องรันคำสั่งระหว่างเขียนโค้ด เช่น `python a.py`, `npm test`, `git status` การสลับไปหน้าต่าง terminal อื่นแล้วกลับมาทำให้เสียจังหวะ toggleterm เปิดเทอร์มินัลซ้อนใน Neovim ให้เลย บน Windows config นี้ตั้งค่าให้ใช้ **PowerShell** (pwsh ถ้ามี ไม่งั้น powershell) ให้อัตโนมัติ ส่วนบน macOS และ Linux ไม่ตั้ง — ใช้ `$SHELL` เดิมของคุณ (macOS default คือ zsh)
 
 | Keymap | ทำอะไร |
 |--------|--------|
@@ -1255,7 +1255,7 @@ k k k              -> เลื่อนขึ้นไปอ่าน error ท
 | `"ayy` | yank บรรทัดปัจจุบันไปเก็บใน register ชื่อ `a` |
 | `"ap` | paste จาก register `a` |
 | `"0p` | paste จาก register `0` = ข้อความที่ **yank** ล่าสุด (ไม่ปนกับที่ลบ/เปลี่ยน) |
-| `"+y` / `"+p` | ใช้ system clipboard ของ Windows (config นี้ผูกไว้ที่ `<Space>y`/`<Space>Y`/`<Space>P`) |
+| `"+y` / `"+p` | ใช้ system clipboard ของเครื่อง (config นี้ผูกไว้ที่ `<Space>y`/`<Space>Y`/`<Space>P`) |
 | `"/` | register ที่เก็บ **คำค้นล่าสุด** เช่นกด `"/p` วางคำที่เพิ่งค้น |
 | `:reg` | เปิดดู register ทั้งหมดว่าช่องไหนมีอะไรอยู่ |
 
@@ -1268,7 +1268,7 @@ k k k              -> เลื่อนขึ้นไปอ่าน error ท
 "ap    -> ดึงบรรทัดที่พักไว้ใน a ออกมาวาง ยังอยู่ครบ
 ```
 
-ใน config นี้ `<Space>y`, `<Space>Y`, `<Space>P` คือทางลัดไปยัง register `+` (system clipboard) ที่เตรียมไว้ให้แล้ว จะได้ก๊อปข้ามไปวางในเบราว์เซอร์หรือโปรแกรมอื่นบน Windows ได้
+ใน config นี้ `<Space>y`, `<Space>Y`, `<Space>P` คือทางลัดไปยัง register `+` (system clipboard) ที่เตรียมไว้ให้แล้ว จะได้ก๊อปข้ามไปวางในเบราว์เซอร์หรือโปรแกรมอื่นได้ (macOS ใช้ `pbcopy`/`pbpaste` ที่มีมาในตัว ไม่ต้องลงอะไร ส่วน Linux ต้องมี xclip/xsel หรือ wl-clipboard)
 
 #### วางเข้า insert / command-line ด้วย `<C-r>`
 
@@ -1281,7 +1281,7 @@ k k k              -> เลื่อนขึ้นไปอ่าน error ท
 | `<C-r>0` | วางเฉพาะ **ของที่ yank ล่าสุด** (ไม่ปนกับของที่ลบ) |
 | `<C-r>a` | วางจาก register `a` |
 
-**ตัวอย่างที่เจอบ่อย:** มีคำสั่งยาวๆ ที่ก๊อปมา (เช่น `:set guifont=...`) → กด `:` แล้วกด **`<C-r>` ตามด้วย `+`** = วางทั้งบรรทัดลง command-line ได้เลย ไม่ต้องพิมพ์มือ. ปุ่ม `<C-r>` เป็นคำสั่งของ Vim เอง (ไม่พึ่ง paste ของ terminal) จึงกดได้เหมือนกันทั้ง Neovide และ Windows Terminal. **หมายเหตุตอน SSH:** `<C-r>"` / `<C-r>0` (register ในตัว nvim) ให้ผลเหมือนกันทุกที่ แต่ `<C-r>+` จะดึง clipboard ของ **เครื่องปลายทาง** (ต้องมี clipboard provider ที่เครื่องนั้น) ไม่ใช่ clipboard ของเครื่องคุณ
+**ตัวอย่างที่เจอบ่อย:** มีคำสั่งยาวๆ ที่ก๊อปมา (เช่น `:set guifont=...`) → กด `:` แล้วกด **`<C-r>` ตามด้วย `+`** = วางทั้งบรรทัดลง command-line ได้เลย ไม่ต้องพิมพ์มือ. ปุ่ม `<C-r>` เป็นคำสั่งของ Vim เอง (ไม่พึ่ง paste ของ terminal) จึงกดได้เหมือนกันทุก terminal และทุก OS. **หมายเหตุตอน SSH:** `<C-r>"` / `<C-r>0` (register ในตัว nvim) ให้ผลเหมือนกันทุกที่ แต่ `<C-r>+` จะดึง clipboard ของ **เครื่องปลายทาง** (ต้องมี clipboard provider ที่เครื่องนั้น) ไม่ใช่ clipboard ของเครื่องคุณ
 
 > ⚠️ **ระวังสับสน:** `<C-r>` เปลี่ยนความหมายตามโหมด — ใน **normal mode** คือ **redo** (ทำซ้ำสิ่งที่ undo) แต่ใน **insert / command-line** คือ **แทรกจาก register**. ปุ่มเดียวกัน คนละงาน ขึ้นกับโหมดที่อยู่
 
@@ -1291,10 +1291,10 @@ k k k              -> เลื่อนขึ้นไปอ่าน error ท
 
 | Keymap | คัดลอกอะไร | ตัวอย่าง (เปิด `lua/core/keymaps.lua`) |
 |--------|-----------|---------|
-| `<Space>cp` | relative path (เทียบกับ root ของโปรเจกต์) | `lua\core\keymaps.lua` |
-| `<Space>cP` | absolute path | `D:\nvim-config\lua\core\keymaps.lua` |
+| `<Space>cp` | relative path (เทียบกับ root ของโปรเจกต์) | `lua/core/keymaps.lua` |
+| `<Space>cP` | absolute path | `~/.config/nvim/lua/core/keymaps.lua` |
 | `<Space>cn` | ชื่อไฟล์อย่างเดียว | `keymaps.lua` |
-| `<Space>cd` | โฟลเดอร์ (absolute) | `D:\nvim-config\lua\core` |
+| `<Space>cd` | โฟลเดอร์ (absolute) | `~/.config/nvim/lua/core` |
 
 กด `<Space>c` แล้วหยุดค้าง → which-key เด้งกลุ่ม **"Copy path"** ให้เลือกต่อ. คัดลอกเสร็จมีข้อความ `Copied ...` แจ้งเตือน; ถ้าอยู่ใน buffer ที่ไม่ใช่ไฟล์ (ต้นไม้/terminal/ไฟล์ยังไม่ตั้งชื่อ) จะเตือนว่าไม่มี path และ **ไม่ล้าง clipboard ทิ้ง**
 
@@ -1415,7 +1415,7 @@ I# <Esc>     -> พิมพ์ "# " แล้วออก
 
 | Keymap | ทำอะไร |
 |--------|--------|
-| `<A-w>` | terminal แนวนอน (PowerShell) |
+| `<A-w>` | terminal แนวนอน (`$SHELL` / PowerShell บน Windows) |
 | `<A-q>` | terminal แบบ float |
 | `<C-\><C-n>` | ออกจาก terminal-insert กลับสู่ normal mode |
 
@@ -1493,7 +1493,7 @@ das   -> ลบทั้งประโยค (a sentence)
 
 ---
 
-## 8. แก้ปัญหาที่พบบ่อย + เคล็ดลับ Windows
+## 8. แก้ปัญหาที่พบบ่อย + เคล็ดลับเฉพาะเครื่อง
 
 มาถึงหมวดสุดท้ายแล้วครับ หมวดนี้คือ "กล่องเครื่องมือฉุกเฉิน" ที่เอาไว้เปิดตอนมีอะไรไม่เป็นไปตามที่หวัง อย่าเพิ่งตกใจหรือคิดว่า config พังนะครับ ปัญหาส่วนใหญ่บน Windows เกิดจากเรื่องเล็กๆ แบบ "ลืมปิด-เปิด terminal ใหม่หลังลงของ" หรือ "ยังไม่เปิดไฟล์เลยเลยยังไม่มีเมนู" ทั้งนั้น ผมจะเรียงให้เป็น **อาการ (symptom) → สาเหตุ → วิธีแก้** ค่อยๆ ไล่ทีละข้อ เดี๋ยวก็ผ่านครับ
 
@@ -1507,16 +1507,36 @@ das   -> ลบทั้งประโยค (a sentence)
 
 **สาเหตุ:** nvim-treesitter (main branch) ต้อง **คอมไพล์ parser เอง** ซึ่งต้องมีเครื่องมือครบบน PATH ถ้าขาดตัวใดตัวหนึ่งก็คอมไพล์ไม่ได้ สิ่งที่ต้องมีบน PATH คือ:
 
-- `tree-sitter` CLI (เวอร์ชัน **>= 0.26.1**) — **ห้ามลงผ่าน npm** เพราะเวอร์ชันจาก npm ใช้กับ main branch ไม่ได้ ให้ลงด้วย winget:
+- `tree-sitter` CLI (เวอร์ชัน **>= 0.26.1**) — เวอร์ชันเก่ากว่านี้ nvim-treesitter branch `main` ไม่รับ เช็คด้วย `tree-sitter --version` เสมอ อย่าเชื่อชื่อแพ็กเกจ
 
 ```powershell
+# Windows
 winget install -e --id tree-sitter.tree-sitter-cli
 ```
 
-- `tar` และ `curl` (สองตัวนี้ Windows 11 มีให้ในตัวอยู่แล้ว)
-- **C compiler** (เช่น `gcc` จาก msys2)
+```bash
+# macOS
+brew install tree-sitter-cli
+```
 
-config ตั้ง `vim.env.CC = "gcc"` ให้อัตโนมัติ **เฉพาะบน Windows และเฉพาะเมื่อคุณยังไม่ได้ตั้ง `$CC` เอง** (คือถ้าคุณตั้ง `$CC` ไว้แล้ว config จะเคารพของคุณ ไม่ทับให้) เพราะฉะนั้นถ้าลง gcc จาก msys2 มาก็มักใช้ได้เลย
+```bash
+# Linux (Debian/Kali) — ถ้าเวอร์ชันจาก npm เก่าเกินไป ให้ใช้ไบนารีจาก release แทน
+npm install -g tree-sitter-cli
+tree-sitter --version
+```
+
+> **กับดักชื่อ formula บน Homebrew:** `tree-sitter` กับ `tree-sitter-cli` เป็นคนละ formula กัน
+> ตัวที่ต้องการคือตัวที่ตอบ `tree-sitter --version` ได้ >= 0.26.1 เช็คเวอร์ชันเสมอ ไม่ใช่เช็คชื่อ
+
+- `tar` และ `curl` (มีมาในตัวอยู่แล้วทั้ง Windows 11, macOS และ Linux)
+- **C compiler**
+  - **macOS:** `clang` จาก Xcode Command Line Tools — `xcode-select --install`
+  - **Linux:** `gcc` จาก `build-essential`
+  - **Windows:** `gcc` จาก msys2 หรือ `clang` จาก LLVM
+
+config ตั้ง `vim.env.CC = "gcc"` ให้อัตโนมัติ **เฉพาะบน Windows และเฉพาะเมื่อคุณยังไม่ได้ตั้ง `$CC` เอง** (คือถ้าคุณตั้ง `$CC` ไว้แล้ว config จะเคารพของคุณ ไม่ทับให้) เพราะฉะนั้นถ้าลง gcc จาก msys2 มาก็มักใช้ได้เลย เหตุผลที่ต้องตั้งคือ tree-sitter CLI บน Windows จะไปหา MSVC (`cl`) เป็นค่า default แล้วไม่ยอมถอยไปใช้ gcc/clang เอง
+
+> **บน macOS และ Linux config ไม่แตะ `$CC` เลย** เพราะ tree-sitter CLI ใช้ `cc` เป็น default อยู่แล้ว ซึ่งก็คือ clang (macOS) หรือ gcc (Linux) — **อย่าไปตั้ง `CC=gcc` เองบน Mac** `/usr/bin/gcc` เป็นแค่ shim ของ clang ไม่ได้อะไรเพิ่ม
 
 > อย่าลืม: หลังลง tree-sitter หรือ gcc เสร็จ **ปิด-เปิด terminal ใหม่** แล้วค่อยเปิด nvim ไม่งั้น PATH ยังไม่อัปเดต
 
@@ -1525,7 +1545,7 @@ config ตั้ง `vim.env.CC = "gcc"` ให้อัตโนมัติ **
 ```vim
 :checkhealth nvim-treesitter
 :echo exepath('tree-sitter')
-:echo exepath('gcc')
+:echo exepath('cc')      " macOS/Linux — บน Windows ใช้ exepath('gcc')
 ```
 
 ถ้า `exepath(...)` คืนค่าเป็นสตริงว่าง แปลว่ายังหาไม่เจอบน PATH (ย้อนกลับไปลง + ปิด-เปิด terminal)
@@ -1575,7 +1595,7 @@ config ตั้ง `vim.env.CC = "gcc"` ให้อัตโนมัติ **
 
 ---
 
-### 8.3 ปุ่มไม่ทำงาน (เช่น Ctrl+Space) โดยเฉพาะใน terminal
+### 8.3 ปุ่มไม่ทำงาน (Ctrl+Space, Alt+...) โดยเฉพาะใน terminal และบน macOS
 
 **อาการ:** กด `Ctrl+Space` เพื่อเปิดเมนู completion แล้วไม่มีอะไรเกิดขึ้น (เจอบ่อยเวลารันใน terminal)
 
@@ -1592,6 +1612,40 @@ config ตั้ง `vim.env.CC = "gcc"` ให้อัตโนมัติ **
 
 จะบอกว่า `<Nul>` ถูกผูกกับอะไรและมาจากไฟล์ไหน
 
+#### เฉพาะ macOS: Ctrl+Space ถูกระบบยึดไป
+
+macOS จองปุ่ม `Ctrl+Space` ไว้ให้ **"Select the previous input source"** (สลับภาษา)
+ซึ่งระบบดักไว้ก่อนที่ terminal ตัวไหนจะได้เห็น — แปลว่า **ทั้ง `Ctrl+Space` และ `<Nul>`
+ไม่มีทางถึง Neovim เลย** ทันทีที่คุณมี input source ตัวที่สอง (เช่นเพิ่มคีย์บอร์ดไทย)
+
+ปิดได้ที่: เมนู Apple → System Settings… → Keyboard → Keyboard Shortcuts… → Input Sources
+
+ถ้าไม่อยากปิด (เพราะใช้สลับไทย/อังกฤษอยู่) ก็ไม่เป็นไร — completion ยังเด้งอัตโนมัติ
+ตอนพิมพ์เหมือนเดิม ที่หายไปคือการเรียกด้วยมือเท่านั้น หรือจะไป map ปุ่มอื่นให้ส่ง
+`<Nul>` ในตัว terminal ก็ได้
+
+#### เฉพาะ macOS: ปุ่ม `<A-...>` กับภาษาไทย
+
+บน macOS ปุ่ม Option เป็นปุ่มผสมอักขระโดย default กด `<A-s>` / `<A-w>` / `<A-q>`
+จะได้ `ß` / `∑` / `œ` ออกมาแทนที่จะทำงาน ต้องตั้ง terminal ให้ส่ง Meta ก่อน
+(WezTerm ส่ง Esc+ จาก Option ซ้ายอยู่แล้วโดยไม่ต้องตั้งอะไร ส่วนตัวอื่นดูตารางใน
+[INSTALL_MACOS_TH.md](INSTALL_MACOS_TH.md))
+
+**แต่ถึงตั้งแล้วก็ยังมีข้อจำกัดที่แก้ไม่ได้:** ตอนที่ input source เป็น **ภาษาไทย**
+Option ซ้าย+w จะส่งปุ่มตาม layout ไทย ไม่ใช่ `^[w` เพราะฉะนั้น `<A-w>`/`<A-q>`/`<A-s>`
+**จะไม่ทำงานขณะพิมพ์ไทย** อันนี้เป็นพฤติกรรมของ input source ของ macOS เอง แก้ที่
+config ไม่ได้
+
+ทางออก: ใช้ **`<C-\>`** เปิด terminal แบบลอยแทน — map ไว้ในโหมด normal เพื่อการนี้
+โดยเฉพาะ (`<C-\><C-n>` ยังใช้ออกจาก terminal mode ได้ตามปกติ เพราะ `<C-\>` เดี่ยว ๆ
+map เฉพาะโหมด normal)
+
+ถ้าใช้ Neovide บน macOS: config ตั้ง `vim.g.neovide_input_macos_option_key_is_meta = "only_left"`
+ไว้ให้แล้วใน `lua/core/options.lua`
+
+> **วิธีเช็คว่าเป็นปัญหาปุ่มจริงไหม:** ลองพิมพ์ `:ToggleTerm` ตรง ๆ ถ้าเปิดได้แปลว่า
+> plugin ทำงานปกติ ปัญหาอยู่ที่ปุ่มอย่างเดียว
+
 ---
 
 ### 8.4 เปิด nvim แล้วจอว่าง / `<Space>f` ขึ้น error
@@ -1600,7 +1654,7 @@ config ตั้ง `vim.env.CC = "gcc"` ให้อัตโนมัติ **
 
 **สาเหตุ + วิธีแก้:**
 
-- ถ้าคุณสั่ง `nvim <directory>` เช่น `nvim .` หรือ `nvim D:\proj` → config จะ `cd` เข้าโฟลเดอร์นั้นให้ แล้วเปิด nvim-tree ให้อัตโนมัติ
+- ถ้าคุณสั่ง `nvim <directory>` เช่น `nvim .` หรือ `nvim ~/proj` → config จะ `cd` เข้าโฟลเดอร์นั้นให้ แล้วเปิด nvim-tree ให้อัตโนมัติ
 - แต่ถ้าคุณรันแค่ `nvim` เปล่าๆ (ไม่ตามด้วยอะไร) แล้วเจอ buffer ว่าง → **นี่คือพฤติกรรมปกติ ไม่ใช่ bug** เปิด tree เองได้ด้วย `<Space>e`
 
 **อาการที่ 2 — `<Space>f` เคยชอบ error นอก git repo:**
@@ -1617,7 +1671,19 @@ config ตั้ง `vim.env.CC = "gcc"` ให้อัตโนมัติ **
 
 **สาเหตุ:** ไอคอนพวกนี้มาจาก **nvim-web-devicons** ซึ่งใช้ glyph พิเศษของ **Nerd Font** ถ้า terminal ของคุณไม่ได้ตั้งฟอนต์เป็น Nerd Font มันก็เรนเดอร์ glyph พวกนั้นไม่ได้
 
-**วิธีแก้:** ไปตั้ง **Nerd Font** ใน profile ของ terminal ที่คุณใช้ เช่น `"JetBrainsMono Nerd Font Mono"` (ตัวย่อ NFM) แค่นี้ไอคอนก็จะกลับมาปกติ
+**วิธีแก้:** ไปตั้ง **Nerd Font** ใน profile ของ terminal ที่คุณใช้ แค่นี้ไอคอนก็จะกลับมาปกติ
+
+ชื่อฟอนต์ต่างกันตามวิธีติดตั้ง:
+
+- **Windows** (winget `DEVCOM.JetBrainsMonoNerdFont`) → `JetBrainsMono NFM`
+- **macOS** (brew `--cask font-jetbrains-mono-nerd-font`) → `JetBrainsMono Nerd Font Mono`
+- **Linux** (โหลด zip จาก Nerd Fonts release) → `JetBrainsMono Nerd Font Mono`
+
+> **macOS:** ตั้งฟอนต์แล้วต้อง **ปิดโปรแกรม terminal ด้วย Cmd-Q ให้สนิท** เปิดแท็บใหม่ไม่พอ
+> เพราะฟอนต์ของ profile ถูกอ่านตอนเปิดแอป — นี่คือสาเหตุอันดับหนึ่งของอาการ
+> "ลงฟอนต์แล้วแต่ยังเห็นเป็นกล่อง"
+>
+> ถ้าใช้ WezTerm ฟอนต์ถูกตั้งไว้ใน `wezterm.lua` ของ dotfiles repo อยู่แล้ว ไม่ต้องตั้งใน UI
 
 > tip: มองหาฟอนต์ที่ลงท้ายด้วย "Nerd Font" หรือ "NF" / "NFM" เสมอ ฟอนต์ธรรมดาที่ชื่อคล้ายกันแต่ไม่มีคำว่า Nerd Font จะไม่มี glyph พวกนี้
 
@@ -1656,26 +1722,42 @@ config ตั้ง `vim.env.CC = "gcc"` ให้อัตโนมัติ **
 
 ---
 
-### 8.8 external tools ที่ต้องมีบน PATH (สำคัญบน Windows)
+### 8.8 external tools ที่ต้องมีบน PATH
 
-หลาย feature เด่นๆ ใน config นี้จริงๆ แล้วเป็นแค่ "ตัวห่อ" (wrapper) ที่ไปเรียกโปรแกรมภายนอกอีกที ถ้าโปรแกรมนั้นไม่อยู่บน PATH feature ก็จะใช้ไม่ได้ ตารางนี้สรุปว่าอะไรต้องมี ลงด้วย winget id ไหน และเช็คยังไง:
+หลาย feature เด่นๆ ใน config นี้จริงๆ แล้วเป็นแค่ "ตัวห่อ" (wrapper) ที่ไปเรียกโปรแกรมภายนอกอีกที ถ้าโปรแกรมนั้นไม่อยู่บน PATH feature ก็จะใช้ไม่ได้ ตารางนี้สรุปว่าอะไรต้องมี และเช็คยังไง:
 
-| feature | ต้องมี | winget id | คำสั่งเช็ค |
-|---|---|---|---|
-| `<Space>ps` (live_grep) | `rg` (ripgrep) | `BurntSushi.ripgrep.MSVC` | `where.exe rg` |
-| `<Space>gg` (LazyGit) | `lazygit` (plugin เป็นแค่ wrapper) | `JesseDuffield.lazygit` | `where.exe lazygit` |
-| bootstrap / อัปเดต plugin | `git` | `Git.Git` | `where.exe git` |
-| treesitter | `tree-sitter` + C compiler | (ดูหัวข้อ 8.1) | (ดูหัวข้อ 8.1) |
+| feature | ต้องมี | คำสั่งเช็คใน nvim |
+|---|---|---|
+| `<Space>ps` (live_grep) | `rg` (ripgrep) | `:echo exepath('rg')` |
+| `<Space>gg` (LazyGit) | `lazygit` (plugin เป็นแค่ wrapper) | `:echo exepath('lazygit')` |
+| bootstrap / อัปเดต plugin | `git` | `:echo exepath('git')` |
+| treesitter | `tree-sitter` + C compiler | (ดูหัวข้อ 8.1) |
 
 ตัวอย่างการลง (อย่าลืมปิด-เปิด terminal หลังลงเสร็จ):
 
 ```powershell
+# Windows
 winget install -e --id BurntSushi.ripgrep.MSVC
 winget install -e --id JesseDuffield.lazygit
 winget install -e --id Git.Git
 ```
 
-ถ้า `where.exe <tool>` คืนค่า path มาแปลว่ามันเจอแล้ว ใช้ได้เลย ถ้าไม่เจออะไรเลยแปลว่ายังไม่อยู่บน PATH
+```bash
+# macOS
+brew install ripgrep lazygit git
+```
+
+```bash
+# Linux (Debian/Kali)
+sudo apt install ripgrep git
+# lazygit ไม่มีใน apt ของ Debian/Kali — โหลดไบนารีจาก release
+```
+
+ถ้า `:echo exepath('<tool>')` คืนค่า path มาแปลว่ามันเจอแล้ว ใช้ได้เลย ถ้าคืนสตริงว่างแปลว่ายังไม่อยู่บน PATH
+
+> ใช้ `exepath()` แทน `where.exe` / `which` เพราะมันเช็ค **PATH ที่ nvim เห็นจริง ๆ**
+> ไม่ใช่ PATH ของ shell ที่คุณพิมพ์ — สองอันนี้ต่างกันได้ โดยเฉพาะตอนเปิด nvim จาก GUI
+> และมันเขียนเหมือนกันหมดทั้งสามแพลตฟอร์ม
 
 ---
 
@@ -1758,11 +1840,11 @@ claude           -> พิมพ์แล้ว Enter เพื่อเปิ�
 
 **ข้อกำหนดก่อนใช้:**
 
-- ต้องมี `claude` CLI อยู่บน **PATH ของ nvim** — เช็คได้โดยพิมพ์ `:!where.exe claude` ใน nvim ถ้าคืน path มาแปลว่าเจอแล้ว (ย้ำเรื่องเดิมจากหมวด 8: ต้อง **restart terminal หลังลง claude** ไม่งั้น PATH ยังไม่อัปเดต)
+- ต้องมี `claude` CLI อยู่บน **PATH ของ nvim** — เช็คได้โดยพิมพ์ `:echo exepath('claude')` ใน nvim (ใช้ได้เหมือนกันทั้งสามแพลตฟอร์ม และเช็ค PATH ที่ nvim เห็นจริง ๆ) ถ้าคืน path มาแปลว่าเจอแล้ว (ย้ำเรื่องเดิมจากหมวด 8: ต้อง **restart terminal หลังลง claude** ไม่งั้น PATH ยังไม่อัปเดต)
 - ต้อง **login / auth** กับ Claude เรียบร้อยแล้ว
 - config นี้ตั้งให้ใช้ **native terminal** อยู่แล้ว จึง **ไม่ต้องลง snacks.nvim เพิ่ม** ให้หนักเครื่องเปล่าๆ
 
-> **เกร็ดจาก codex (cross-model):** สองเรื่องที่ควรระวัง — (1) ถ้าคุณใช้ auto-save plugin ให้ตั้งค่าไม่ให้มันบันทึก buffer ที่เป็น diff ของ Claude เพราะบางทีแค่การเซฟ buffer ที่กำลังโชว์ diff อยู่ อาจถูกตีความเป็นการ accept ไปเลย และ (2) ถ้า nvim หา `claude` ไม่เจอ (เช็คด้วย `:!where.exe claude` แล้วว่าง) ให้ตั้ง `terminal_cmd` เป็น **path เต็มของ `claude.exe`** ในไฟล์ `lua/plugins/claudecode.lua` เป็นทางลัดแก้ปัญหา PATH ได้เลย
+> **เกร็ดจาก codex (cross-model):** สองเรื่องที่ควรระวัง — (1) ถ้าคุณใช้ auto-save plugin ให้ตั้งค่าไม่ให้มันบันทึก buffer ที่เป็น diff ของ Claude เพราะบางทีแค่การเซฟ buffer ที่กำลังโชว์ diff อยู่ อาจถูกตีความเป็นการ accept ไปเลย และ (2) ถ้า nvim หา `claude` ไม่เจอ (เช็คด้วย `:echo exepath('claude')` แล้วว่าง) ให้ตั้ง `terminal_cmd` เป็น **path เต็มของตัว `claude`** (บน Windows ตัวที่ใช้ได้คือ shim `claude.cmd` ไม่ใช่ไฟล์ที่ไม่มีนามสกุล) ในไฟล์ `lua/plugins/claudecode.lua` เป็นทางลัดแก้ปัญหา PATH ได้เลย
 
 ---
 

@@ -9,12 +9,12 @@
 
 ## วิธีใช้ไฟล์นี้ (อ่านก่อน)
 
-1. เปิดไฟล์นี้: `nvim D:\nvim-config\VIM_PRACTICE.md` (หรือ `<C-p>` แล้วพิมพ์ `practice`)
+1. เปิดไฟล์นี้: `nvim ~/.config/nvim/VIM_PRACTICE_TH.md` (บน Windows: `nvim $env:LOCALAPPDATA\nvim\VIM_PRACTICE_TH.md`) หรือกด `<C-p>` แล้วพิมพ์ `practice`
 2. เลื่อนไปที่ drill ที่อยากฝึก → ทำบน **บรรทัดในกรอบ "ก่อน"** → เทียบกับ "หลัง"
 3. **ทำพลาด/อยากลองใหม่** เลือกได้ 3 ทาง:
    - `u` = undo ทีละขั้น (เร็วสุดสำหรับ drill เดียว)
    - `:e!` = โหลดไฟล์ใหม่จากดิสก์ ทิ้งที่แก้ทั้งหมด (**ใช้ได้ถ้ายังไม่ `:w`**)
-   - เผลอ `:w` ไปแล้ว → คืนไฟล์เดิมด้วย git (ได้หลังไฟล์นี้ถูก commit แล้ว): `:!git checkout -- VIM_PRACTICE.md` แล้ว `:e!`
+   - เผลอ `:w` ไปแล้ว → คืนไฟล์เดิมด้วย git (ได้หลังไฟล์นี้ถูก commit แล้ว): `:!git checkout -- VIM_PRACTICE_TH.md` แล้ว `:e!`
 4. **กติกา:** ระหว่างฝึก **อย่า `:w`** ถ้าอยากให้ไฟล์กลับมาสะอาดง่ายๆ — พังยังไงก็ `:e!` รีเซ็ตได้
 
 > ⚠️ **หมายเหตุ:** drill หมวด 1-10 ใช้ text object/motion **built-in** ล้วน · ส่วน plugin ที่เพิ่งเพิ่ม (`vaf`/`vif` function object, flash `s`, surround `gs`) มี drill แยกใน **หมวด 11** ท้ายไฟล์
@@ -339,4 +339,4 @@ wrap this word
 
 **ทฤษฎีเต็ม + ตารางปุ่ม:** `NVIM_GUIDE_TH.md` (§2 พื้นฐาน · §3 text object · §7 expert + cheatsheet) · `VIM_TEXT_OBJECTS.md` · `VIM_TUTORIAL.md`
 
-> รีเซ็ตไฟล์ให้สะอาด: `:e!` (ถ้ายังไม่เซฟ) · ถ้าเผลอเซฟ และ commit ไฟล์นี้ไว้แล้ว: `:!git checkout -- VIM_PRACTICE.md` แล้ว `:e!` · สู้ๆ นะครับ ทุกคนเคยผ่านช่วงงงๆ มาก่อน 💪
+> รีเซ็ตไฟล์ให้สะอาด: `:e!` (ถ้ายังไม่เซฟ) · ถ้าเผลอเซฟ และ commit ไฟล์นี้ไว้แล้ว: `:!git checkout -- VIM_PRACTICE_TH.md` แล้ว `:e!` · สู้ๆ นะครับ ทุกคนเคยผ่านช่วงงงๆ มาก่อน 💪

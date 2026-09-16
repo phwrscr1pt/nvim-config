@@ -1,0 +1,11 @@
+# Normalise everything to LF in the repository. Windows checkouts still get CRLF
+# where the OS wants it, but the stored bytes are identical on Windows / macOS / Kali.
+* text=auto eol=lf
+
+# Windows-only helpers must stay CRLF in the working tree.
+# (neovide-assoc-install.reg is plain ASCII, not UTF-16LE, so `text` is safe here.
+#  It WOULD corrupt a UTF-16 .reg.)
+*.ps1 text eol=crlf
+*.reg text eol=crlf
+
+*.png binary

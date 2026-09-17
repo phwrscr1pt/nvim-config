@@ -215,21 +215,59 @@ Ranked by how likely you are to hit them.
 4. **Colours look wrong inside tmux even in a good terminal.** Use
    `tmux-256color` plus `set -as terminal-features ",*:RGB"`, not
    `screen-256color`.
-5. **Treesitter fails silently** if `tree-sitter` or `cc` is missing from the
+5. **Parsers fail to compile with a linker error about `arm64e.x1`.** If you see
+
+   ```
+   ld: tapi error: malformed file
+   .../MacOSX27.0.sdk/usr/lib/libSystem.B.tbd: error: unknown architecture
+                      arm64e.x1-macos, arm64e.x1-maccatalyst ]
+   ```
+
+   **this is not a Neovim problem — your whole C toolchain is broken.** Prove it
+   in five seconds:
+
+   ```bash
+   echo 'int main(void){return 0;}' > /tmp/t.c && cc /tmp/t.c -o /tmp/t
+   ```
+
+   If that fails too, the cause is that macOS shipped a newer SDK than the
+   Command Line Tools linker understands — `xcrun` picks the newest SDK present,
+   and an older `ld` cannot parse its `.tbd` files. Check with
+   `ls /Library/Developer/CommandLineTools/SDKs/` and `xcrun --show-sdk-version`.
+
+   *Proper fix:* update macOS, then
+   `sudo softwareupdate --install "Command Line Tools for Xcode <version>"` so the
+   linker matches the SDK. *Workaround until then:* pin the SDK to the one that
+   matches your clang (`clang --version` shows its target):
+
+   ```bash
+   echo 'export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX26.sdk' >> ~/.zshenv
+   exec zsh
+   ```
+
+   `~/.zshenv`, not `~/.zprofile` — build tools spawn non-interactive shells,
+   which read only zshenv. `SDKROOT` is not PATH, so the `path_helper` warning
+   elsewhere in this guide does not apply. Remove the line once the real fix
+   lands and `cc /tmp/t.c -o /tmp/t` still works.
+
+6. **Treesitter fails silently** if `tree-sitter` or `cc` is missing from the
    PATH Neovim sees. You keep legacy regex highlighting, so it is easy to miss —
    but `af`/`if`/`ac`/`ic`, `]f`/`[f` and `<Space>or` all quietly stop working.
-   Diagnose with `:checkhealth nvim-treesitter`.
-6. **Privacy prompts make folders look empty.** The first time your terminal
+   Diagnose with `:checkhealth nvim-treesitter`. Note that parsers compile
+   **asynchronously in the background** on first launch — `nvim --headless -c 'qa!'`
+   exits before they finish. Leave an interactive `nvim` open for a couple of
+   minutes, then check `ls ~/.local/share/nvim/site/parser/ | wc -l` (expect 15).
+7. **Privacy prompts make folders look empty.** The first time your terminal
    touches `~/Desktop`, `~/Documents` or `~/Downloads`, macOS asks permission. If
    denied, directory reads fail and the tree, Telescope and project.nvim all come
    up blank with no error. Check with
    `:lua vim.print(vim.fn.readdir(vim.fn.expand('~/Desktop')))` — not
    `isdirectory()`, which still returns 1. Simplest avoidance: keep projects in
    `~/code`.
-7. **No physical Esc key** (2016-2019 Touch Bar MacBook Pro): System Settings ->
+8. **No physical Esc key** (2016-2019 Touch Bar MacBook Pro): System Settings ->
    Keyboard -> Keyboard Shortcuts -> Modifier Keys -> Caps Lock = Escape. Worth
    doing on any Mac.
-8. **GUI-launched Neovim sees none of your PATH.** An app started from Finder or
+9. **GUI-launched Neovim sees none of your PATH.** An app started from Finder or
    Spotlight inherits launchd's minimal PATH, not `~/.zprofile`. A plain `nvim`
    typed in a terminal is unaffected.
 

@@ -1540,6 +1540,46 @@ config ตั้ง `vim.env.CC = "gcc"` ให้อัตโนมัติ **
 
 > อย่าลืม: หลังลง tree-sitter หรือ gcc เสร็จ **ปิด-เปิด terminal ใหม่** แล้วค่อยเปิด nvim ไม่งั้น PATH ยังไม่อัปเดต
 
+#### เฉพาะ macOS: error เรื่อง `arm64e.x1` — คอมไพเลอร์พัง ไม่ใช่ treesitter พัง
+
+ถ้า parser คอมไพล์ไม่ผ่านแล้วขึ้นข้อความประมาณนี้
+
+```
+ld: tapi error: malformed file
+.../MacOSX27.0.sdk/usr/lib/libSystem.B.tbd: error: unknown architecture
+                   arm64e.x1-macos, arm64e.x1-maccatalyst ]
+```
+
+**อย่าเพิ่งไปแก้ที่ treesitter** เพราะปัญหาอยู่ที่ C toolchain ของเครื่อง ทดสอบแยกได้ทันที:
+
+```bash
+echo 'int main(void){return 0;}' > /tmp/t.c && cc /tmp/t.c -o /tmp/t
+```
+
+ถ้าคอมไพล์ hello world ธรรมดายังไม่ผ่าน = ไม่เกี่ยวกับ Neovim เลย สาเหตุคือ macOS
+ติดตั้ง SDK รุ่นใหม่กว่าที่ linker ของ Command Line Tools รู้จัก (`xcrun` เลือก SDK
+ใหม่สุดเสมอ แล้ว `ld` รุ่นเก่าอ่าน `.tbd` ของมันไม่ออก)
+
+แก้ที่ต้นเหตุคืออัปเดต macOS แล้วลง Command Line Tools รุ่นที่คู่กัน ส่วน workaround
+ระหว่างนั้นคือตรึง SDK ไว้ที่รุ่นที่ตรงกับ clang (ดู target จาก `clang --version`):
+
+```bash
+echo 'export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX26.sdk' >> ~/.zshenv
+exec zsh
+```
+
+> ใส่ใน `~/.zshenv` เพราะ build tool เรียก shell แบบ non-interactive ซึ่งอ่านแค่ไฟล์นี้
+
+#### parser คอมไพล์เบื้องหลัง — อย่าใช้ `--headless` วัดผล
+
+`nvim --headless -c 'qa!'` จะออกก่อนคอมไพล์เสร็จ ทำให้ดูเหมือน parser ไม่ลงทั้งที่
+มันแค่ถูกฆ่ากลางทาง ให้เปิด `nvim` ค้างไว้จนข้อความ `[nvim-treesitter/install/...]`
+หยุดขึ้น (ราว 1-3 นาที เพราะ `cpp` กับ `rust` ตัวใหญ่) แล้วค่อยนับ:
+
+```bash
+ls ~/.local/share/nvim/site/parser/ | wc -l
+```
+
 **วิธีเช็คว่ามีของครบไหม** — เปิด nvim แล้วรัน:
 
 ```vim

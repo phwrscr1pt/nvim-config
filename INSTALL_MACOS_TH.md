@@ -210,20 +210,58 @@ LSP server, แก้ปัญหา, อัปเดต และถอนก�
    ปุ่มอื่นใน terminal ก็ได้ ทั้งนี้ completion ยังเด้งอัตโนมัติอยู่เหมือนเดิม
 4. **สีเพี้ยนเมื่ออยู่ใน tmux แม้จะใช้ terminal ที่ดี** ให้ใช้ `tmux-256color`
    คู่กับ `set -as terminal-features ",*:RGB"` ไม่ใช่ `screen-256color`
-5. **treesitter พังเงียบ ๆ** ถ้า `tree-sitter` หรือ `cc` ไม่อยู่ใน PATH ที่ Neovim เห็น
+5. **parser คอมไพล์ไม่ผ่าน ขึ้น error เรื่อง `arm64e.x1`** ถ้าเห็นแบบนี้
+
+   ```
+   ld: tapi error: malformed file
+   .../MacOSX27.0.sdk/usr/lib/libSystem.B.tbd: error: unknown architecture
+                      arm64e.x1-macos, arm64e.x1-maccatalyst ]
+   ```
+
+   **นี่ไม่ใช่ปัญหาของ Neovim — C toolchain ทั้งเครื่องพัง** พิสูจน์ได้ใน 5 วินาที:
+
+   ```bash
+   echo 'int main(void){return 0;}' > /tmp/t.c && cc /tmp/t.c -o /tmp/t
+   ```
+
+   ถ้าอันนี้พังด้วย แปลว่า macOS ติดตั้ง SDK ที่ใหม่กว่าที่ linker ของ Command Line
+   Tools รู้จัก — `xcrun` จะเลือก SDK ใหม่สุดที่มีเสมอ แล้ว `ld` รุ่นเก่าอ่านไฟล์
+   `.tbd` ของมันไม่ออก เช็คด้วย `ls /Library/Developer/CommandLineTools/SDKs/`
+   และ `xcrun --show-sdk-version`
+
+   *แก้ที่ต้นเหตุ:* อัปเดต macOS แล้วลง
+   `sudo softwareupdate --install "Command Line Tools for Xcode <เวอร์ชัน>"`
+   ให้ linker ตรงรุ่นกับ SDK
+   *workaround ระหว่างนั้น:* ตรึง SDK ไว้ที่รุ่นที่ตรงกับ clang ของคุณ
+   (ดู target ได้จาก `clang --version`)
+
+   ```bash
+   echo 'export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX26.sdk' >> ~/.zshenv
+   exec zsh
+   ```
+
+   ใส่ใน `~/.zshenv` ไม่ใช่ `~/.zprofile` เพราะ build tool เรียก shell แบบ
+   non-interactive ซึ่งอ่านแค่ zshenv — และ `SDKROOT` ไม่ใช่ PATH จึงไม่เกี่ยวกับ
+   คำเตือนเรื่อง `path_helper` ที่อื่นในคู่มือนี้ ลบบรรทัดนี้ทิ้งเมื่อแก้ที่ต้นเหตุ
+   เสร็จแล้วและ `cc /tmp/t.c -o /tmp/t` ยังผ่าน
+
+6. **treesitter พังเงียบ ๆ** ถ้า `tree-sitter` หรือ `cc` ไม่อยู่ใน PATH ที่ Neovim เห็น
    คุณจะยังได้ syntax highlight แบบ regex ของ Vim เดิมอยู่ เลยสังเกตยาก — แต่
    `af`/`if`/`ac`/`ic`, `]f`/`[f` และ `<Space>or` จะเลิกทำงานทั้งหมด
-   ตรวจด้วย `:checkhealth nvim-treesitter`
-6. **หน้าต่างขออนุญาตของ macOS ทำให้โฟลเดอร์ดูเหมือนว่าง** ครั้งแรกที่ terminal
+   ตรวจด้วย `:checkhealth nvim-treesitter` และจำไว้ว่า parser **คอมไพล์เบื้องหลัง
+   แบบ async** ตอนเปิดครั้งแรก — `nvim --headless -c 'qa!'` จะออกก่อนคอมไพล์เสร็จ
+   ให้เปิด `nvim` ค้างไว้สักสองสามนาที แล้วค่อยนับด้วย
+   `ls ~/.local/share/nvim/site/parser/ | wc -l` (ควรได้ 15)
+7. **หน้าต่างขออนุญาตของ macOS ทำให้โฟลเดอร์ดูเหมือนว่าง** ครั้งแรกที่ terminal
    แตะ `~/Desktop`, `~/Documents` หรือ `~/Downloads` macOS จะถาม ถ้ากดปฏิเสธ
    การอ่านโฟลเดอร์จะล้มเหลว แล้ว tree, Telescope และ project.nvim จะว่างเปล่า
    โดยไม่มี error ตรวจด้วย
    `:lua vim.print(vim.fn.readdir(vim.fn.expand('~/Desktop')))` — ไม่ใช่
    `isdirectory()` เพราะมันยังคืนค่า 1 อยู่ วิธีเลี่ยงที่ง่ายที่สุดคือเก็บงานไว้ที่ `~/code`
-7. **ไม่มีปุ่ม Esc จริง** (MacBook Pro Touch Bar ปี 2016-2019): System Settings →
+8. **ไม่มีปุ่ม Esc จริง** (MacBook Pro Touch Bar ปี 2016-2019): System Settings →
    Keyboard → Keyboard Shortcuts → Modifier Keys → Caps Lock = Escape
    คุ้มที่จะทำบน Mac ทุกเครื่อง
-8. **Neovim ที่เปิดจาก GUI มองไม่เห็น PATH ของคุณ** แอปที่เปิดจาก Finder หรือ
+9. **Neovim ที่เปิดจาก GUI มองไม่เห็น PATH ของคุณ** แอปที่เปิดจาก Finder หรือ
    Spotlight จะได้ PATH ขั้นต่ำของ launchd ไม่ใช่ของ `~/.zprofile`
    ถ้าพิมพ์ `nvim` ใน terminal ตามปกติจะไม่เจอปัญหานี้
 

@@ -51,7 +51,12 @@ Copies the current buffer's path to the system clipboard (works in any buffer).
 | `<Space>e` | Normal | Toggle file tree (find current file) |
 
 Inside nvim-tree:
-- `a` - Create new file/folder
+- `a` - Create. **A trailing `/` is what makes it a folder** — nvim-tree decides
+  from the name you type, not from a different key:
+  - `notes.md` -> a file
+  - `notes/` -> a folder
+  - `lua/plugins/new/` -> creates every missing level
+  - `lua/plugins/foo.lua` -> creates the missing folders, then the file
 - `d` - Delete file
 - `r` - Rename file
 - `x` / `c` / `p` - Cut / copy / paste
@@ -59,7 +64,7 @@ Inside nvim-tree:
 - `Enter` / `o` - Open file
 - `<C-v>` / `<C-x>` / `<C-t>` - Open in vertical split / horizontal split / new tab
 - `H` - Toggle hidden files
-- `g?` - Show help (all mappings)
+- `g?` - Show help (**the authoritative list** — these are nvim-tree's own keys, not ours)
 - `q` - Close tree
 
 ## File Search (Telescope)
